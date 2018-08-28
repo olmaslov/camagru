@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
 body {
   font-family: 'Open Sans', sans-serif;
 }
@@ -40,7 +43,7 @@ body {
 }
 
 .modal-1 {
-  height: 34rem;
+  /*height: 34rem;*/
   left: calc(50% - 15rem);
   max-width: 30rem;
   top: calc(50% - 16.5rem);
@@ -130,7 +133,7 @@ body {
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::after {
   background-color: #fff;
-  background-image: url("/camagru_mvc/public/img/iconmonstr-checkbox-3.svg");
+  background-image: url('/camagru_mvc/public/img/iconmonstr-checkbox-3.svg');
   background-size: cover;
   outline: 0;
   outline-offset: 0;
@@ -192,12 +195,8 @@ textarea {
 }
 
 .sendcomm {
-  font-size: 40pt;
+  font-size: 40pt !important;
   vertical-align: super;
-}
-
-.container {
-  height: 100vh;
 }
 
 .textcomm textarea {

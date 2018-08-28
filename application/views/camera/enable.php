@@ -1,5 +1,3 @@
-<h3>Demo: Take a Selfie With JavaScript</h3>
-
 <div class="row">
 
 	<div class="app">

@@ -13,7 +13,6 @@
 // }
 
 function fadeOut(el){
-    console.log(el);
     el.style.opacity = 1;
 
     (function fade() {
@@ -41,6 +40,15 @@ function fadeIn(el, display){
 function closemodal() {
     var el = document.getElementById('modal-content');
     fadeOut(el);
+    // Stop stream
+    try{
+    let stream = video.srcObject;
+    let tracks = stream.getTracks();
+
+    tracks.forEach(function (track) {
+        track.stop();
+    });}
+    catch {}
 }
 
 function fbLoginAJAX() {
@@ -60,7 +68,7 @@ function fbLoginAJAX() {
 				nw.window.close();
                 var arr = nw.window.location.hash.split('&');
                 var xhr = new XMLHttpRequest();
-                xhr.open("POST", '/camagru_mvc/account/login', true);
+                xhr.open("POST", '/camagru_mvc/login', true);
                 xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 xhr.onreadystatechange = function () {
                     if (this.readyState != 4) return;
@@ -102,7 +110,7 @@ function glLoginAJAX(){
 				nw.window.close();
                 var arr = nw.window.location.hash.split('&');
                 var xhr = new XMLHttpRequest();
-                xhr.open("POST", '/camagru_mvc/account/login', true);
+                xhr.open("POST", '/camagru_mvc/login', true);
                 xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 xhr.onreadystatechange = function () {
                     if (this.readyState != 4) return;
@@ -137,7 +145,7 @@ function intraLoginAJAX() {
         "hello",
         "width=500,height=500");
     var sc = new XMLHttpRequest();
-    sc.open("POST", '/camagru_mvc/account/login', true);
+    sc.open("POST", '/camagru_mvc/login', true);
     sc.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     sc.onreadystatechange = function () {
         if (this.readyState != 4) return;
@@ -167,7 +175,7 @@ function intraLoginAJAX() {
                             if (this.readyState != 4) return;
                             if (this.status == 200) {
                                 var xhr1 = new XMLHttpRequest();
-                                xhr1.open("POST", '/camagru_mvc/account/login', true);
+                                xhr1.open("POST", '/camagru_mvc/login', true);
                                 xhr1.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                                 xhr1.onreadystatechange = function () {
                                     if (this.readyState != 4) return;

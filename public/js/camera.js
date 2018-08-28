@@ -10,44 +10,25 @@ var video = document.querySelector('#camera-stream'),
 
 
 // The getUserMedia interface is used for handling camera input.
-// Some browsers need a prefix so here we're covering all the options
-navigator.getMedia = ( navigator.getUserMedia ||
-	navigator.webkitGetUserMedia ||
-	navigator.mozGetUserMedia ||
-	navigator.msGetUserMedia);
-
-
-if(!navigator.getMedia){
-	displayErrorMessage("Your browser doesn't have support for the navigator.getUserMedia interface.");
-}
-else{
 
 	// Request the camera.
-	navigator.getMedia(
+var ms;
+navigator.getUserMedia(
 		{
 			video: true
 		},
-		// Success Callback
-		function(stream){
-
-			// Create an object URL for the video stream and
-			// set it as src of our HTLM video element.
-			video.src = window.URL.createObjectURL(stream);
-
-			// Play the video element to start the stream.
-			video.play();
-			video.onplay = function() {
-				showVideo();
-			};
-
-		},
-		// Error Callback
-		function(err){
-			displayErrorMessage("There was an error with accessing the camera stream: " + err.name, err);
-		}
-	);
-
-}
+        function(mediaStream) {
+            var video = document.querySelector('video');
+            video.srcObject = mediaStream;
+            video.onloadedmetadata = function(e) {
+                video.play();
+                video.onplay = function() {
+                    showVideo();
+                };
+            };
+            ms = mediaStream;
+        },
+		function(err) { console.log(err.name + ": " + err.message); });
 
 
 
@@ -83,7 +64,6 @@ take_photo_btn.addEventListener("click", function(e){
 
 	// Pause video playback of stream.
 	video.pause();
-
 });
 
 
@@ -101,7 +81,6 @@ delete_photo_btn.addEventListener("click", function(e){
 
 	// Resume playback of stream.
 	video.play();
-
 });
 
 
