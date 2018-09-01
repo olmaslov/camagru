@@ -3,7 +3,7 @@
 	<div class="app">
 
 		<a href="#" id="start-camera" class="visible">Touch here to start the app.</a>
-		<video id="camera-stream"></video>
+		<video id="camera-stream" muted></video>
 		<img id="snap">
 
 		<p id="error-message"></p>
@@ -21,10 +21,10 @@
 
 </div>
 
-<script src="/camagru_mvc/public/js/camera.js"></script>
+<script src="/camagru_mvc/public/js/test.js"></script>
 <style>
-	@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
-	@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+	/*@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');*/
+	/*@import url('https://fonts.googleapis.com/icon?family=Material+Icons+Rounded');*/
 
 	*{
 		box-sizing: border-box;
