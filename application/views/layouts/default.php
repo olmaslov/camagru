@@ -9,6 +9,8 @@
 		<link rel="stylesheet" href="/camagru_mvc/public/css/style.css">
 		<link rel="stylesheet" href="/camagru_mvc/public/css/animate.css">
 		<script src="/camagru_mvc/public/js/login.js"></script>
+		<script src="/camagru_mvc/public/js/filters.js"></script>
+        <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css">
 		<title>login</title>
 	</head>
 

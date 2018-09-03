@@ -3,7 +3,7 @@
 	<div class="app">
 
 		<a href="#" id="start-camera" class="visible">Touch here to start the app.</a>
-		<video id="camera-stream" muted></video>
+		<video id="camera-stream" class="" muted></video>
 		<img id="snap">
 
 		<p id="error-message"></p>
@@ -15,7 +15,7 @@
 		</div>
 
 		<!-- Hidden canvas element. Used for taking snapshot of video. -->
-		<canvas></canvas>
+		<canvas class="_1977"></canvas>
 
 	</div>
 

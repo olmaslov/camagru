@@ -183,17 +183,28 @@ function takeSnapshot(){
     var width = video.videoWidth,
         height = video.videoHeight;
 
-    console.log(video);
+    base_image = new Image();
+    base_image.src = 'public/img/vignettes/1.png';
 
-    if (width && height) {
+    if (width && height && base_image) {
 
         // Setup a canvas with the same dimensions as the video.
         hidden_canvas.width = width;
         hidden_canvas.height = height;
 
-        // Make a copy of the current frame in the video on the canvas.
-        context.drawImage(video, 0, 0, width, height);
-
+        // context.drawImage(base_image, 0, 0, width, height);
+        // context.filter = 'hue-rotate(-20) contrast(90%) brightness(120%) saturate(85%)';
+        // // Make a copy of the current frame in the video on the canvas.
+        // context.drawImage(video, 0, 0, width, height);
+        // context.globalAlpha = 0.2;
+        // context.globalCompositeOperation = 'darken';
+        // context.drawImage(gradient.canvas, 0, 0, width, height);
+        // adenFilter(context, width, height);
+        // _1977Filter(context, width, height);
+        // brannanFilter(context, width, height);
+        // brooklynFilter(context, width, height);
+        // clarendonFilter(context, width, height);
+        earlybirdFilter(context, width, height);
         // Turn the canvas image into a dataURL that can be used as a src for our photo.
         return hidden_canvas.toDataURL('image/png');
     }
