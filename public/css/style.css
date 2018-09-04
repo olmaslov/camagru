@@ -5,10 +5,10 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
-video {
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
-}
+/*video {*/
+  /*-webkit-transform: scaleX(-1);*/
+  /*transform: scaleX(-1);*/
+/*}*/
 
 .test_abs {
   box-sizing: border-box;

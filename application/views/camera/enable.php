@@ -11,9 +11,10 @@
 		<div class="controls">
 			<a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></a>
 			<a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a>
-			<a href="#" id="download-photo" download="selfie.png" title="Save Photo" class="disabled"><i class="material-icons">file_download</i></a>
+			<a href="#" id="download-photo" download="selfie.png" title="Save Photo" class="visible"><i class="material-icons">file_upload</i></a>
 		</div>
 
+        <input type="file" style="display: none" id="upload">
 		<!-- Hidden canvas element. Used for taking snapshot of video. -->
 		<canvas class="_1977"></canvas>
 
@@ -63,7 +64,7 @@
 		text-align: center;
 	}
 
-	.app video#camera-stream{
+	.app #camera-stream{
 		display: none;
 		width: 100%;
 	}
@@ -143,7 +144,7 @@
 
 
 
-	.app video#camera-stream.visible,
+	.app #camera-stream.visible,
 	.app img#snap.visible,
 	.app #error-message.visible
 	{

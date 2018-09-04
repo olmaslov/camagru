@@ -54,7 +54,7 @@ var fade = function () {
 
 
 
-var video = document.querySelector('#camera-stream'),
+var video = document.querySelector('.camera-stream'),
     image = document.querySelector('#snap'),
     start_camera = document.querySelector('#start-camera'),
     controls = document.querySelector('.controls'),
