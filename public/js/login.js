@@ -40,6 +40,11 @@ function fadeIn(el, display){
 function closemodal() {
     var el = document.getElementById('modal-content');
     fadeOut(el);
+}
+
+function closemodal2() {
+    var el = document.getElementById('modal-content2');
+    fadeOut(el);
     // Stop stream
     try{
     let stream = video.srcObject;

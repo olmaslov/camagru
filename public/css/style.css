@@ -59,8 +59,8 @@ body {
 
 .modal-2 {
   /*height: 38rem;*/
-  left: calc(50% - 15rem);
-  max-width: 30rem;
+  left: calc(50% - 25rem);
+  max-width: 50rem;
   top: calc(50% - 19rem);
    padding: 50px;
   width: 100%;

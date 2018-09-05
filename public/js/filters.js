@@ -14,7 +14,6 @@ function linearGrad () {
         var gradient = ctx.createLinearGradient(0, 0, width, 0);
     var j = 0;
     var step = 1/(arguments.length - 3);
-    console.log(step, arguments.length);
     for (var i = 3; i < arguments.length; i++) {
         gradient.addColorStop(j, arguments[i]);
         j = j + (step * 2) > 1 ? 1 : j + (step * 2);
@@ -43,7 +42,6 @@ function radGrad () {
     var j = 0;
     var step = 1/(arguments.length - 2);
     for (var i = 2; i < arguments.length; i++) {
-        console.log(j);
         gradient.addColorStop(j, arguments[i]);
         j = j + (step * 2) > 1 ? 1 : j + (step * 2);
     }
@@ -76,6 +74,10 @@ function adenFilter(ctx, width, height) {
     ctx.globalCompositeOperation = 'darken';
     var gradient = linearGrad(width, height, "to right", "rgba(66, 10, 14, .2)");
     ctx.drawImage(gradient.canvas, 0, 0, width, height);
+}
+
+function noneFilter(ctx, width, height) {
+    ctx.drawImage(vidc, 0, 0, width, height);
 }
 
 function _1977Filter(ctx, width, height) {
@@ -209,8 +211,8 @@ function mayfairFilter(ctx, width, height) {
 function perpetuaFilter(ctx, width, height) {
     ctx.filter = 'contrast(1.1) saturate(1.1)';
     // Make a copy of the current frame in the image on the canvas.
-    ctx.translate(width, 0);
-    ctx.scale(-1, 1);
+    // ctx.translate(width, 0);
+    // ctx.scale(-1, 1);
     ctx.drawImage(vidc, 0, 0, width, height);
     ctx.globalCompositeOperation = 'soft-light';
     var gradient = linearGrad(width, height, "to bot", "rgba(0, 91, 154, 0.5)", "rgba(230, 193, 61, 0.5)");

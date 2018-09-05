@@ -5,27 +5,84 @@
 		<a href="#" id="start-camera" class="visible">Touch here to start the app.</a>
 		<video id="camera-stream" class="" muted></video>
 		<img id="snap">
+		<img id="snap2">
 
 		<p id="error-message"></p>
 
 		<div class="controls">
 			<a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></a>
-			<a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a>
-			<a href="#" id="download-photo" download="selfie.png" title="Save Photo" class="visible"><i class="material-icons">file_upload</i></a>
-		</div>
+            <a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a>
+            <a href="#" id="upload-photo" class="visible"><i class="material-icons">file_upload</i></a>
+<!--            <a href="#" id="download-photo" download="img.png" title="Save Photo" class="visible"><i class="material-icons">file_download</i></a>-->
+        </div>
 
         <input type="file" style="display: none" id="upload">
 		<!-- Hidden canvas element. Used for taking snapshot of video. -->
-		<canvas class="_1977"></canvas>
+		<canvas></canvas>
 
 	</div>
 
 </div>
+<div class="row">
+    <div class="filter-gallery" id="fg">
+        <img class="filters" src="public/img/filterSamples/1977.png" alt="_1977"/>
+        <img class="filters" src="public/img/filterSamples/aden.png" alt="aden"/>
+        <img class="filters" src="public/img/filterSamples/brannan.png" alt="brannan"/>
+        <img class="filters" src="public/img/filterSamples/brooklyn.png" alt="brooklyn"/>
+        <img class="filters" src="public/img/filterSamples/clarendon.png" alt="clarendon"/>
+        <img class="filters" src="public/img/filterSamples/gingham.png" alt="gingham"/>
+        <img class="filters" src="public/img/filterSamples/hudson.png" alt="hudson"/>
+        <img class="filters" src="public/img/filterSamples/inkwell.png" alt="inkwell"/>
+        <img class="filters" src="public/img/filterSamples/lofi.png" alt="lofi"/>
+        <img class="filters" src="public/img/filterSamples/maven.png" alt="maven"/>
+        <img class="filters" src="public/img/filterSamples/mayfair.png" alt="mayfair"/>
+        <img class="filters" src="public/img/filterSamples/perpetua.png" alt="perpetua"/>
+        <img class="filters" src="public/img/filterSamples/reyes.png" alt="reyes"/>
+        <img class="filters" src="public/img/filterSamples/stinson.png" alt="stinson"/>
+        <img class="filters" src="public/img/filterSamples/toaster.png" alt="toaster"/>
+        <img class="filters" src="public/img/filterSamples/valencia.png" alt="valencia"/>
+        <img class="filters" src="public/img/filterSamples/walden.png" alt="walden"/>
+        <img class="filters" src="public/img/filterSamples/xpro2.png" alt="xpro2"/>
+    </div>
+</div>
 
 <script src="/camagru_mvc/public/js/test.js"></script>
+<script>
+    (function() {
+        function scrollHorizontally(e) {
+            e = window.event || e;
+            var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+            document.getElementById('fg').scrollLeft -= (delta*40); // Multiplied by 40
+            e.preventDefault();
+        }
+        if (document.getElementById('fg').addEventListener) {
+            // IE9, Chrome, Safari, Opera
+            document.getElementById('fg').addEventListener("mousewheel", scrollHorizontally, false);
+            // Firefox
+            document.getElementById('fg').addEventListener("DOMMouseScroll", scrollHorizontally, false);
+        } else {
+            // IE 6/7/8
+            document.getElementById('fg').attachEvent("onmousewheel", scrollHorizontally);
+        }
+    })();
+</script>
 <style>
 	/*@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');*/
 	/*@import url('https://fonts.googleapis.com/icon?family=Material+Icons+Rounded');*/
+
+    .filter-gallery{
+        height:10%;
+        width:100%;
+        overflow-x:scroll;
+        white-space: nowrap;
+    }
+
+    .filter-gallery img {
+        display: inline-block;
+        vertical-align: top;
+        width: 25%;
+        height: auto;
+    }
 
 	*{
 		box-sizing: border-box;

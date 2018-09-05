@@ -3,24 +3,62 @@
     <div class="app">
 
         <a href="#" id="start-camera" class="visible">Touch here to start the app.</a>
-        <video id="camera-stream" muted></video>
+        <video id="camera-stream" class="" muted></video>
         <img id="snap">
 
         <p id="error-message"></p>
 
         <div class="controls">
-            <a href="#" id="delete-photo" title="Delete Photo"><i class="material-icons">delete</i></a>
+            <a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></a>
+            <div>
+                <select id="filters">
+                    <option>_1977</option>
+                    <option>aden</option>
+                    <option>brannan</option>
+                    <option>brooklyn</option>
+                    <option>clarendon</option>
+                    <option>earlybird</option>
+                    <option>gingham</option>
+                    <option>hudson</option>
+                    <option>inkwell</option>
+                    <option>lofi</option>
+                    <option>maven</option>
+                    <option>mayfair</option>
+                    <option>perpetua</option>
+                    <option>reyes</option>
+                    <option>stinson</option>
+                    <option>toaster</option>
+                    <option>valencia</option>
+                    <option>walden</option>
+                    <option>xpro2</option>
+                </select>
+            </div>
             <a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a>
-            <a href="#" id="download-photo" download="selfie.png" title="Save Photo" ><i class="material-icons">file_download</i></a>
+            <a href="#" id="upload-photo" class="visible"><i class="material-icons">file_upload</i></a>
+            <div id="carousel" class="carousel">
+                <a class="arrow prev"><i class="material-icons">navigate_before</i></a>
+                <div class="gallery">
+                    <ul class="images">
+                        <li><img src="public/img/filterSamples/1977.png"></li>
+                        <li><img src="public/img/filterSamples/aden.png"></li>
+                        <li><img src="public/img/filterSamples/brannan.png"></li>
+                        <li><img src="public/img/filterSamples/brooklyn.png"></li>
+                    </ul>
+                </div>
+                <a class="arrow next"><i class="material-icons">navigate_next</i></a>
+            </div>
+            <a href="#" id="download-photo" download="img.png" title="Save Photo" class="visible"><i class="material-icons">file_download</i></a>
         </div>
-
+        <input type="file" style="display: none" id="upload">
         <!-- Hidden canvas element. Used for taking snapshot of video. -->
-        <canvas></canvas>
+        <canvas class="_1977"></canvas>
 
     </div>
 
 </div>
-<script src="/camagru_mvc/public/js/test.js"></script><style>
+
+<script src="/camagru_mvc/public/js/test.js"></script>
+<style>
     @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
     @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
@@ -61,7 +99,7 @@
         text-align: center;
     }
 
-    .app video#camera-stream{
+    .app #camera-stream{
         display: none;
         width: 100%;
     }
@@ -141,7 +179,7 @@
 
 
 
-    .app video#camera-stream.visible,
+    .app #camera-stream.visible,
     .app img#snap.visible,
     .app #error-message.visible
     {
@@ -185,5 +223,68 @@
         }
     }
 
+    .carousel {
+        position: relative;
+        width: 398px;
+        padding: 10px 40px;
+        border-radius: 15px;
+    }
 
+    .carousel img {
+        width: 150px;
+        height: 150px;
+        /* по умолчанию inline, в ряде браузеров это даст лишнее пространство вокруг элементов */
+
+        display: block;
+    }
+
+    .arrow {
+        position: absolute;
+        top: 60px;
+        padding: 0;
+        border-radius: 15px;
+        font-size: 24px;
+        line-height: 24px;
+        color: #444;
+        display: block;
+    }
+
+    .arrow:focus {
+        outline: none;
+    }
+
+    .arrow:hover {
+        background: #ccc;
+        cursor: pointer;
+    }
+
+    .prev {
+        left: 7px;
+    }
+
+    .next {
+        right: 7px;
+    }
+
+    .gallery {
+        width: 300px;
+        overflow: hidden;
+    }
+
+    .gallery ul {
+        height: 150px;
+        width: 9999px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        transition: margin-left 250ms;
+        /* remove white-space between inline-block'ed li */
+        /* http://davidwalsh.name/remove-whitespace-inline-block */
+
+        font-size: 0;
+    }
+
+    .gallery li {
+        display: inline-block;
+    }
 </style>

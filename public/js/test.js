@@ -58,12 +58,16 @@ var video = document.querySelector('#camera-stream'),
     controls = document.querySelector('.controls'),
     record = document.querySelector('#take-photo'),
     delete_btn = document.querySelector('#delete-photo'),
-    upload_btn = document.querySelector('#download-photo'),
+    upload_btn = document.querySelector('#upload-photo'),
+    download_btn = document.querySelector('#download-photo'),
     error_message = document.querySelector('#error-message'),
     upld = document.querySelector("#upload"),
     base_image = document.createElement('img'),
     flag = 0,
-    vidc;
+    filters = document.querySelectorAll(".filters"),
+    filter,
+    vidc,
+    imgreserved;
 
 navigator.getUserMedia = (navigator.getUserMedia ||
     navigator.mozGetUserMedia ||
@@ -119,7 +123,6 @@ if (navigator.getUserMedia) {
                     var videoURL = window.URL.createObjectURL(blob);
 
                     upload_btn.href = videoURL;
-                    console.log(videoURL);
 
                     var rand = Math.floor((Math.random() * 10000000));
                     var name = "video_"+rand+".mp4" ;
@@ -129,20 +132,24 @@ if (navigator.getUserMedia) {
             } else {
                 console.log('false');
                 mediaRecorder.stop();
+                filter = 'none';
+                flag = 0;
                 var snap = takeSnapshot();
 
                 // Show image.
                 image.setAttribute('src', snap);
+                imgreserved = snap;
                 image.classList.add("visible");
 
+                console.log(image);
                 // Enable delete and save buttons
                 upload_btn.classList.remove("disabled");
 
                 // Set the href attribute of the download button to the snap url.
-                upload_btn.href = snap;
+                // upload_btn.href = snap;
                 delete_btn.classList.remove("disabled");
-                upload_btn.setAttribute( "download", 'pic.png');
-                record.classList.add("disabled");
+                // upload_btn.setAttribute( "download", 'pic.png');
+                // record.classList.add("disabled");
             }
             record.style.background = "";
             record.style.color = "";
@@ -176,25 +183,21 @@ function visualize(mediaStream) {
     };
 }
 
-function takeSnapshot(){
+function takeSnapshot() {
     // Here we're using a trick that involves a hidden canvas element.
 
     var hidden_canvas = document.querySelector('canvas'),
         context = hidden_canvas.getContext('2d');
-if (flag == 0) {
-    var width = video.videoWidth,
-        height = video.videoHeight;
-    vidc = video;
-}
-else {
-    var width = base_image.width,
-    height = base_image.height;
-    vidc = base_image;
-}
-    // base_image = new Image();
-    // base_image.setAttribute('crossOrigin', 'anonymous');
-    // base_image.src = 'public/img/filter.png';
-
+    if (flag == 0) {
+        var width = video.videoWidth,
+            height = video.videoHeight;
+        vidc = video;
+    }
+    else {
+        var width = base_image.width,
+            height = base_image.height;
+        vidc = base_image;
+    }
 
     if (width && height) {
 
@@ -202,35 +205,14 @@ else {
         hidden_canvas.width = width;
         hidden_canvas.height = height;
 
-        // context.drawImage(base_image, 0, 0, width, height);
-        // context.filter = 'hue-rotate(-20) contrast(90%) brightness(120%) saturate(85%)';
-        // // Make a copy of the current frame in the video on the canvas.
-        // context.drawImage(video, 0, 0, width, height);
-        // context.globalAlpha = 0.2;
-        // context.globalCompositeOperation = 'darken';
-        // context.drawImage(gradient.canvas, 0, 0, width, height);
-        // adenFilter(context, width, height);
-        // _1977Filter(context, width, height);
-        // brannanFilter(context, width, height);
-        // brooklynFilter(context, width, height);
-        // clarendonFilter(context, width, height);
-        // earlybirdFilter(context, width, height);
-        // ginghamFilter(context, width, height);
-        // hudsonFilter(context, width, height);
-        // inkwellFilter(context, width, height);
-        // lofiFilter(context, width, height);
-        // mavenFilter(context, width, height);
-        // mayfairFilter(context, width, height);
-        // perpetuaFilter(context, width, height);
-        // reyesFilter(context, width, height);
-        // stinsonFilter(context, width, height);
-        // toasterFilter(context, width, height);
-        // valenciaFilter(context, width, height);
-        // waldenFilter(context, width, height);
-        xpro2Filter(context, width, height);
+        console.log(filter);
+        eval(filter + "Filter(context, width, height)");
         // Turn the canvas image into a dataURL that can be used as a src for our photo.
-        // console.log(hidden_canvas);
-        return hidden_canvas.toDataURL('image/png');
+        var nUrl = hidden_canvas.toDataURL('image/png');
+        // download_btn.href = nUrl;
+
+        // download_btn.setAttribute( "download", name);
+        return nUrl;
     }
 }
 
@@ -248,7 +230,7 @@ function hideUI(){
     controls.classList.remove("visible");
     start_camera.classList.remove("visible");
     video.classList.remove("visible");
-    snap.classList.remove("visible");
+    image.classList.remove("visible");
     error_message.classList.remove("visible");
 }
 
@@ -258,6 +240,28 @@ upload_btn.addEventListener("click", function (e) {
     upld.click();
 });
 
+filters.forEach(function (filt) {
+    filt.addEventListener('click', function (e) {
+        if (image.src) {
+            e.preventDefault();
+
+
+            console.log(flag);
+
+            if (flag == 2){
+                image.src = imgreserved;
+            }
+                base_image = image;
+            filter = this.alt;
+            // image.classList.add("visible");
+            flag = 2;
+
+            var snap = takeSnapshot();
+            image.setAttribute('src', snap);
+        }
+    });
+});
+
 upld.addEventListener("change", function (e) {
     e.preventDefault();
 
@@ -265,9 +269,11 @@ upld.addEventListener("change", function (e) {
         var getImage = document.querySelector('#camera-stream');
         base_image.innerHTML = getImage.innerHTML;
         base_image.id = getImage.id;
-        base_image.classList = getImage.classList;
+        // image.classList = getImage.classList;
         base_image.src = window.URL.createObjectURL(upld.files[0]);
 
+        base_image.classList.add("visible");
+        video.classList.remove("visible");
         getImage.parentNode.replaceChild(base_image, getImage);
         delete_btn.firstChild.innerText = 'camera_alt';
         record.firstChild.innerText = 'check';
@@ -278,15 +284,20 @@ upld.addEventListener("change", function (e) {
 
 delete_btn.addEventListener("click", function(e){
     e.preventDefault();
+
 if (flag == 1) {
-    base_image.parentNode.replaceChild(video, base_image);
+    // image.parentNosde.replaceChild(video, image);
+    image.classList.remove("visible");
+    image.removeAttribute('src');
     delete_btn.firstChild.innerText = 'delete';
     record.firstChild.innerText = 'camera_alt';
     flag = 0;
 }
     // Hide image.
-    image.setAttribute('src', "");
+    // image.setAttribute('src', "");
+    image.removeAttribute('src');
     image.classList.remove("visible");
+
 
     // Disable delete and save buttons
     delete_btn.classList.add("disabled");
@@ -294,5 +305,6 @@ if (flag == 1) {
     // download_photo_btn.classList.add("disabled");
 
     // Resume playback of stream.
+    console.log(image);
     video.play();
 });
