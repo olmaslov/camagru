@@ -18,7 +18,8 @@
 
         <input type="file" style="display: none" id="upload">
 		<!-- Hidden canvas element. Used for taking snapshot of video. -->
-		<canvas></canvas>
+		<canvas id="layer1"></canvas>
+        <img id="tmpimg" class="hide"/>
 
 	</div>
 
@@ -127,7 +128,7 @@
 	}
 
 	.app img#snap{
-		position: absolute;
+		/*position: absolute;*/
 		top: 0;
 		left: 0;
 		width: 100%;

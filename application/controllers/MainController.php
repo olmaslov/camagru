@@ -14,10 +14,11 @@ use application\lib\Db;
 
 class MainController extends Controller {
 	public function indexAction() {
-		$result = $this->model->get_news();
-		$vars = [
-			'news' => $result
-		];
-		$this->view->render('main page', $vars);
+
+//		$result = $this->model->get_news();
+//		$vars = [
+//			'news' => $result
+//		];
+		$this->view->render('main page');
 	}
 }

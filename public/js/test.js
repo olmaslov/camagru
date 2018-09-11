@@ -51,6 +51,14 @@ var fade = function () {
         }
     };
 
+function getBlobFromSrc(e){
+    let img=e.target, strBlob=e.target.src;
+    console.log(strBlob);
+    fetch(strBlob)
+        .then(i=>i.blob())
+        .then(i=>console.log(i)) // -> blob
+}
+
 
 var video = document.querySelector('#camera-stream'),
     image = document.querySelector('#snap'),
@@ -59,15 +67,17 @@ var video = document.querySelector('#camera-stream'),
     record = document.querySelector('#take-photo'),
     delete_btn = document.querySelector('#delete-photo'),
     upload_btn = document.querySelector('#upload-photo'),
-    download_btn = document.querySelector('#download-photo'),
     error_message = document.querySelector('#error-message'),
     upld = document.querySelector("#upload"),
-    base_image = document.createElement('img'),
     flag = 0,
     filters = document.querySelectorAll(".filters"),
     filter,
+    tmpimg = document.querySelector('#tmpimg'),
     vidc,
-    imgreserved;
+    vid,
+    img,
+    ready,
+    blob1;
 
 navigator.getUserMedia = (navigator.getUserMedia ||
     navigator.mozGetUserMedia ||
@@ -97,25 +107,70 @@ if (navigator.getUserMedia) {
         visualize(stream);
 
 
-        record.onmousedown = function (){timeoutID = setTimeout(function(){timer = true;
-        var fef_block = new fade();
-        fef_block.ini('#000000', '#ff0000', 25, 10, 'take-photo');
-        record.innerHTML = '<i class="material-icons">videocam</i>';}, 2000);
-            mediaRecorder.start();
-                console.log(mediaRecorder.state);
-                console.log("recorder started");
-                // record.style.background = "red";
+        record.onmousedown = function () {
+            if (!ready) {
+                timeoutID = setTimeout(function () {
+                    timer = true;
+                    var fef_block = new fade();
+                    fef_block.ini('#000000', '#ff0000', 25, 10, 'take-photo');
+                    record.innerHTML = '<i class="material-icons">videocam</i>';
+                }, 2000);
+                mediaRecorder.start();
+                // console.log(mediaRecorder.state);
+                // console.log("recorder started");
                 record.style.color = "black";
+                // console.log(flag);
+            } else {
+                if (vid){
+                    var reader = new FileReader();
+                    reader.onload = function(event) {
+                        var fd = new FormData();
+                        fd.append('type', 'video');
+                        fd.append('data', event.target.result);
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", 'https://localhost:8443/camagru_mvc/savetodb', true);
+                        // xhr.setRequestHeader('Content-type', '');
+                        xhr.onreadystatechange = function () {
+                            if (this.readyState != 4) return;
+                            if (this.status == 200) {
+                                console.log(this.responseText);
+                            } else {
+                                console.log(this.status);
+                            }
+                        };
+                        xhr.send(fd);
+                    }
+                    reader.readAsDataURL(blob1);
+                } else if (!vid && img) {
+                    var fd = new FormData();
+                        fd.append('type', 'pic');
+                        fd.append('data', image.src);
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", 'https://localhost:8443/camagru_mvc/savetodb', true);
+                        // xhr.setRequestHeader('Content-type', '');
+                        xhr.onreadystatechange = function () {
+                            if (this.readyState != 4) return;
+                            if (this.status == 200) {
+                                console.log(this.responseText);
+                            } else {
+                                console.log(this.status);
+                            }
+                        };
+                        xhr.send(fd);
+                }
+
+            }
         }
 
         record.onmouseup = function() {
-            if (timer == true) {
-                console.log('true');
-                mediaRecorder.stop();
-                console.log(mediaRecorder.state);
-                console.log("recorder stopped");
-                record.style.background = "";
-                record.style.color = "";
+            if (!ready) {
+                if (timer == true) {
+                    console.log('true');
+                    mediaRecorder.stop();
+                    console.log(mediaRecorder.state);
+                    console.log("recorder stopped");
+                    record.style.background = "";
+                    record.style.color = "";
 
                     var blob = new Blob(chunks, {type: "video/mp4"});
                     chunks = [];
@@ -127,35 +182,41 @@ if (navigator.getUserMedia) {
                     var rand = Math.floor((Math.random() * 10000000));
                     var name = "video_"+rand+".mp4" ;
 
+                    blob1 = blob;
+
+                    vid = videoURL;
+                    upload_btn.classList.remove("disabled");
+                    delete_btn.classList.remove("disabled");
+                    record.firstChild.innerText = 'check';
                     upload_btn.setAttribute( "download", name);
                     upload_btn.setAttribute( "name", name);
-            } else {
-                console.log('false');
-                mediaRecorder.stop();
-                filter = 'none';
-                flag = 0;
-                var snap = takeSnapshot();
+                } else {
+                    console.log('false');
+                    mediaRecorder.stop();
+                    filter = 'none';
+                    flag = 0;
+                    var snap = takeSnapshot();
 
-                // Show image.
-                image.setAttribute('src', snap);
-                imgreserved = snap;
-                image.classList.add("visible");
+                    // Show image.
+                    tmpimg.src = snap;
+                    image.setAttribute('src', snap);
+                    image.classList.add("visible");
 
-                console.log(image);
-                // Enable delete and save buttons
-                upload_btn.classList.remove("disabled");
 
-                // Set the href attribute of the download button to the snap url.
-                // upload_btn.href = snap;
-                delete_btn.classList.remove("disabled");
-                // upload_btn.setAttribute( "download", 'pic.png');
-                // record.classList.add("disabled");
+                    video.classList.remove("visible");
+                    record.firstChild.innerText = 'check';
+                    console.log(image);
+                    // Enable delete and save buttons
+                    upload_btn.classList.remove("disabled");
+                    delete_btn.classList.remove("disabled");
+                }
+                ready = 1;
+                record.style.background = "";
+                record.style.color = "";
+                // record.innerHTML = '<i class="material-icons">camera_alt</i>';
+                clearTimeout(timeoutID);
+                timer = 0;
             }
-            record.style.background = "";
-            record.style.color = "";
-            record.innerHTML = '<i class="material-icons">camera_alt</i>';
-            clearTimeout(timeoutID);
-            timer = 0;
         }
 
         mediaRecorder.ondataavailable = function(e) {
@@ -194,24 +255,25 @@ function takeSnapshot() {
         vidc = video;
     }
     else {
-        var width = base_image.width,
-            height = base_image.height;
-        vidc = base_image;
+        var width = tmpimg.width,
+            height = tmpimg.height;
+        vidc = tmpimg;
     }
 
     if (width && height) {
 
-        // Setup a canvas with the same dimensions as the video.
+        context.filter = null;
+        context.globalCompositeOperation = null;
+        // Setup a canvas with the same dimensions as the video/img
         hidden_canvas.width = width;
         hidden_canvas.height = height;
 
         console.log(filter);
+
         eval(filter + "Filter(context, width, height)");
         // Turn the canvas image into a dataURL that can be used as a src for our photo.
         var nUrl = hidden_canvas.toDataURL('image/png');
-        // download_btn.href = nUrl;
-
-        // download_btn.setAttribute( "download", name);
+        img = nUrl;
         return nUrl;
     }
 }
@@ -234,26 +296,18 @@ function hideUI(){
     error_message.classList.remove("visible");
 }
 
-upload_btn.addEventListener("click", function (e) {
-    e.preventDefault();
-
-    upld.click();
-});
+// upload_btn.addEventListener("click", function (e) {
+//     e.preventDefault();
+//
+//     upld.click();
+// });
 
 filters.forEach(function (filt) {
     filt.addEventListener('click', function (e) {
         if (image.src) {
             e.preventDefault();
 
-
-            console.log(flag);
-
-            if (flag == 2){
-                image.src = imgreserved;
-            }
-                base_image = image;
             filter = this.alt;
-            // image.classList.add("visible");
             flag = 2;
 
             var snap = takeSnapshot();
@@ -266,18 +320,16 @@ upld.addEventListener("change", function (e) {
     e.preventDefault();
 
     if (upld.files.length > 0){
-        var getImage = document.querySelector('#camera-stream');
-        base_image.innerHTML = getImage.innerHTML;
-        base_image.id = getImage.id;
-        // image.classList = getImage.classList;
-        base_image.src = window.URL.createObjectURL(upld.files[0]);
-
-        base_image.classList.add("visible");
-        video.classList.remove("visible");
-        getImage.parentNode.replaceChild(base_image, getImage);
+        video.classList.add("visible");
+        image.setAttribute('src', window.URL.createObjectURL(upld.files[0]));
+        tmpimg.src = image.src;
+        image.classList.add("visible");
+        delete_btn.classList.remove('disabled');
         delete_btn.firstChild.innerText = 'camera_alt';
         record.firstChild.innerText = 'check';
+        video.classList.remove("visible");
         flag = 1;
+        ready = 1;
     }
 });
 
@@ -285,24 +337,23 @@ upld.addEventListener("change", function (e) {
 delete_btn.addEventListener("click", function(e){
     e.preventDefault();
 
-if (flag == 1) {
-    // image.parentNosde.replaceChild(video, image);
+if (flag) {
     image.classList.remove("visible");
     image.removeAttribute('src');
     delete_btn.firstChild.innerText = 'delete';
-    record.firstChild.innerText = 'camera_alt';
     flag = 0;
 }
+ready = 0;
+    record.firstChild.innerText = 'camera_alt';
     // Hide image.
-    // image.setAttribute('src', "");
     image.removeAttribute('src');
     image.classList.remove("visible");
 
+    video.classList.add("visible");
 
-    // Disable delete and save buttons
+
     delete_btn.classList.add("disabled");
     record.classList.remove("disabled");
-    // download_photo_btn.classList.add("disabled");
 
     // Resume playback of stream.
     console.log(image);
