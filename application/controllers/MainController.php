@@ -8,13 +8,11 @@
 
 namespace application\controllers;
 
-
 use application\core\Controller;
 use application\lib\Db;
 
 class MainController extends Controller {
 	public function indexAction() {
-
 		$result = $this->model->get_post('0');
 		$vars = [
 			'news' => $result

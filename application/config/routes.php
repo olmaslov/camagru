@@ -31,8 +31,8 @@ return [
         'action' => 'save'
     ],
 
-    'install' => [
-        'controller' => 'installation',
-        'action' => 'install'
+    'getpost' => [
+        'controller' => 'post',
+        'action' => 'get'
     ]
 ];

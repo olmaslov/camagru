@@ -109,8 +109,8 @@ VALUES (:email, :first_name, :last_name, :id, :img, 2, :hash)",
 				'hash' => $hash
 			];
 			$this->db->query("INSERT INTO `users` 
-(`email`, `f_name`, `l_name`, `fb_id`, `token`, `pic`, `role`) 
-VALUES (:email, :first_name, :last_name, :id, :atoken, :img, '2')");
+(`email`, `f_name`, `l_name`, `fb_id`, `token`, `pic`, `role`, `hash`) 
+VALUES (:email, :first_name, :last_name, :id, :atoken, :img, '2', :hash)", $params);
 			$query = $this->db->row("SELECT * from users WHERE email = '". $email->email ."'");
 			$jsonret['hash'] = $hash;
 			$jsonret['id'] = $query['id'];
