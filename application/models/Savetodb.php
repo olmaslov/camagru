@@ -11,8 +11,9 @@ namespace application\models;
 use application\core\Model;
 
 class Savetodb extends Model {
-//    public function get_news() {
-//        $result = $this->db->row('SELECT title, description FROM news');
-//        return $result;
-//    }
+    public function save_post($params) {
+        $this->db->query("INSERT INTO `posts` (`uid`, `type`, `descr`) VALUES (:uid, :type, :descr)", $params);
+        $result = $this->db->row("SELECT LAST_INSERT_ID()");
+        return $result['LAST_INSERT_ID()'];
+    }
 }

@@ -29,5 +29,10 @@ return [
     'savetodb' => [
         'controller' => 'savetodb',
         'action' => 'save'
+    ],
+
+    'install' => [
+        'controller' => 'installation',
+        'action' => 'install'
     ]
 ];

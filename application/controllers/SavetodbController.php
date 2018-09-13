@@ -13,17 +13,30 @@ use application\lib\Db;
 
 class SavetodbController extends Controller {
     public function saveAction() {
-        var_dump($_POST);
         if ($_POST['type'] == 'video') {
             $data = substr($_POST['data'], strpos($_POST['data'], ",") + 1);
 
+
+            $params = [
+                'uid' => 1,
+                'descr' => $_POST['descr'],
+                'type' => 1
+            ];
+            $name = $this->model->save_post($params);
             $decodedData = base64_decode($data);
-            file_put_contents('private/video/' . rand(1, 1000) . '.mp4', $decodedData);
+            file_put_contents('private/video/' . $name . '.mp4', $decodedData);
         } elseif ($_POST['type'] == 'pic') {
             $data = substr($_POST['data'], strpos($_POST['data'], ",") + 1);
 
+            $params = [
+                'uid' => 1,
+                'descr' => $_POST['descr'],
+                'type' => 0
+            ];
+            $name = $this->model->save_post($params);
             $decodedData = base64_decode($data);
-            file_put_contents('private/photo/' . rand(1, 1000) . '.png', $decodedData);
+            file_put_contents('private/photo/' . $name . '.png', $decodedData);
         }
+        print_r($name);
     }
 }

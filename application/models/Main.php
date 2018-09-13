@@ -15,4 +15,9 @@ class Main extends Model {
 		$result = $this->db->row('SELECT title, description FROM news');
 		return $result;
 	}
+
+	public function get_post($last) {
+	    $result = $this->db->row('SELECT id, type, descr FROM posts');
+	    return $result;
+    }
 }

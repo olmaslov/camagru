@@ -1,12 +1,19 @@
+function changeSize() {
+    var mod2 = document.querySelector('.modal-2');
+    var m2 = 'calc(50% - ' + (mod2.clientHeight / 2) + 'px)';
+    mod2.style.top = m2;
+    console.log(m2);
+}
+
 var fade = function () {
         return {
             num_step:0,
             ini:function (s_col,e_col,step,tim,id,fun) {
-                this.num_step=0;
-                var s_col_map=[];
-                var e_col_map=[];
-                var gen_col='';
-                var k=0;
+                this.num_step = 0;
+                var s_col_map = [];
+                var e_col_map = [];
+                var gen_col = '';
+                var k = 0;
                 var num = (s_col.charAt(0)=='#') ? 1:0;
                 for(var i=num;i<s_col.length;i=i+2) {
                     s_col_map[k++]=parseInt(s_col.charAt(i)+s_col.charAt(i+1),16);
@@ -51,15 +58,6 @@ var fade = function () {
         }
     };
 
-function getBlobFromSrc(e){
-    let img=e.target, strBlob=e.target.src;
-    console.log(strBlob);
-    fetch(strBlob)
-        .then(i=>i.blob())
-        .then(i=>console.log(i)) // -> blob
-}
-
-
 var video = document.querySelector('#camera-stream'),
     image = document.querySelector('#snap'),
     start_camera = document.querySelector('#start-camera'),
@@ -69,10 +67,11 @@ var video = document.querySelector('#camera-stream'),
     upload_btn = document.querySelector('#upload-photo'),
     error_message = document.querySelector('#error-message'),
     upld = document.querySelector("#upload"),
-    flag = 0,
     filters = document.querySelectorAll(".filters"),
-    filter,
     tmpimg = document.querySelector('#tmpimg'),
+    savepic = document.querySelector('#svpic'),
+    flag = 0,
+    filter,
     vidc,
     vid,
     img,
@@ -88,8 +87,6 @@ var isFirefox = typeof InstallTrigger !== 'undefined';
 var isChrome = !!window.chrome && !!window.chrome.webstore;
 
 if (navigator.getUserMedia) {
-    console.log('getUserMedia supported.');
-
     if(isChrome){
         var constraints = {"audio": true, "video": { "mandatory": { "minWidth": 600, "maxWidth": 1936, "minHeight": 600,"maxHeight": 1936 }, "optional": [] } };
     }else if(isFirefox){
@@ -106,7 +103,6 @@ if (navigator.getUserMedia) {
 
         visualize(stream);
 
-
         record.onmousedown = function () {
             if (!ready) {
                 timeoutID = setTimeout(function () {
@@ -116,49 +112,7 @@ if (navigator.getUserMedia) {
                     record.innerHTML = '<i class="material-icons">videocam</i>';
                 }, 2000);
                 mediaRecorder.start();
-                // console.log(mediaRecorder.state);
-                // console.log("recorder started");
                 record.style.color = "black";
-                // console.log(flag);
-            } else {
-                if (vid){
-                    var reader = new FileReader();
-                    reader.onload = function(event) {
-                        var fd = new FormData();
-                        fd.append('type', 'video');
-                        fd.append('data', event.target.result);
-                        var xhr = new XMLHttpRequest();
-                        xhr.open("POST", 'https://localhost:8443/camagru_mvc/savetodb', true);
-                        // xhr.setRequestHeader('Content-type', '');
-                        xhr.onreadystatechange = function () {
-                            if (this.readyState != 4) return;
-                            if (this.status == 200) {
-                                console.log(this.responseText);
-                            } else {
-                                console.log(this.status);
-                            }
-                        };
-                        xhr.send(fd);
-                    }
-                    reader.readAsDataURL(blob1);
-                } else if (!vid && img) {
-                    var fd = new FormData();
-                        fd.append('type', 'pic');
-                        fd.append('data', image.src);
-                        var xhr = new XMLHttpRequest();
-                        xhr.open("POST", 'https://localhost:8443/camagru_mvc/savetodb', true);
-                        // xhr.setRequestHeader('Content-type', '');
-                        xhr.onreadystatechange = function () {
-                            if (this.readyState != 4) return;
-                            if (this.status == 200) {
-                                console.log(this.responseText);
-                            } else {
-                                console.log(this.status);
-                            }
-                        };
-                        xhr.send(fd);
-                }
-
             }
         }
 
@@ -187,11 +141,11 @@ if (navigator.getUserMedia) {
                     vid = videoURL;
                     upload_btn.classList.remove("disabled");
                     delete_btn.classList.remove("disabled");
-                    record.firstChild.innerText = 'check';
+                    // record.firstChild.innerText = 'check';
+                    record.classList.add("disabled");
                     upload_btn.setAttribute( "download", name);
                     upload_btn.setAttribute( "name", name);
                 } else {
-                    console.log('false');
                     mediaRecorder.stop();
                     filter = 'none';
                     flag = 0;
@@ -204,8 +158,8 @@ if (navigator.getUserMedia) {
 
 
                     video.classList.remove("visible");
-                    record.firstChild.innerText = 'check';
-                    console.log(image);
+                    // record.firstChild.innerText = 'check';
+                    record.classList.add("disabled");
                     // Enable delete and save buttons
                     upload_btn.classList.remove("disabled");
                     delete_btn.classList.remove("disabled");
@@ -225,12 +179,10 @@ if (navigator.getUserMedia) {
     }
 
     var onError = function(err) {
-        console.log('The following error occured: ' + err);
     }
 
     navigator.getUserMedia(constraints, onSuccess, onError);
 } else {
-    console.log('getUserMedia not supported on your browser!');
 }
 
 function visualize(mediaStream) {
@@ -268,7 +220,6 @@ function takeSnapshot() {
         hidden_canvas.width = width;
         hidden_canvas.height = height;
 
-        console.log(filter);
 
         eval(filter + "Filter(context, width, height)");
         // Turn the canvas image into a dataURL that can be used as a src for our photo.
@@ -284,6 +235,7 @@ function showVideo(){
     hideUI();
     video.classList.add("visible");
     controls.classList.add("visible");
+    changeSize();
 }
 
 function hideUI(){
@@ -296,11 +248,11 @@ function hideUI(){
     error_message.classList.remove("visible");
 }
 
-// upload_btn.addEventListener("click", function (e) {
-//     e.preventDefault();
-//
-//     upld.click();
-// });
+upload_btn.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    upld.click();
+});
 
 filters.forEach(function (filt) {
     filt.addEventListener('click', function (e) {
@@ -312,24 +264,32 @@ filters.forEach(function (filt) {
 
             var snap = takeSnapshot();
             image.setAttribute('src', snap);
-        }
+                    }
     });
 });
+
+
 
 upld.addEventListener("change", function (e) {
     e.preventDefault();
 
     if (upld.files.length > 0){
-        video.classList.add("visible");
         image.setAttribute('src', window.URL.createObjectURL(upld.files[0]));
+        filter = 'none';
+        ready = 0;
         tmpimg.src = image.src;
-        image.classList.add("visible");
-        delete_btn.classList.remove('disabled');
-        delete_btn.firstChild.innerText = 'camera_alt';
-        record.firstChild.innerText = 'check';
-        video.classList.remove("visible");
-        flag = 1;
-        ready = 1;
+        image.onload = function () {
+            image.classList.add("visible");
+            delete_btn.classList.remove('disabled');
+            delete_btn.firstChild.innerText = 'camera_alt';
+            record.classList.add('disabled');
+            video.classList.remove("visible");
+            flag = 1;
+            if (!ready)
+                takeSnapshot();
+            ready = 1;
+            changeSize();
+        };
     }
 });
 
@@ -356,6 +316,47 @@ ready = 0;
     record.classList.remove("disabled");
 
     // Resume playback of stream.
-    console.log(image);
     video.play();
+});
+
+savepic.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    if (vid){
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            var fd = new FormData();
+            fd.append('type', 'video');
+            fd.append('data', event.target.result);
+            fd.append('descr', document.querySelector('#descr').value);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", 'https://localhost:8443/camagru_mvc/savetodb', true);
+            xhr.onreadystatechange = function () {
+                if (this.readyState != 4) return;
+                if (this.status == 200) {
+                    console.log(this.responseText);
+                } else {
+                    console.log(this.status);
+                }
+            };
+            xhr.send(fd);
+        }
+        reader.readAsDataURL(blob1);
+    } else if (!vid && img) {
+        var fd = new FormData();
+        fd.append('type', 'pic');
+        fd.append('data', img);
+        fd.append('descr', document.querySelector('#descr').value);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", 'https://localhost:8443/camagru_mvc/savetodb', true);
+        xhr.onreadystatechange = function () {
+            if (this.readyState != 4) return;
+            if (this.status == 200) {
+                console.log(this.responseText);
+            } else {
+                console.log(this.status);
+            }
+        };
+        xhr.send(fd);
+    }
 });

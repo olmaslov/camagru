@@ -248,7 +248,8 @@ echo "" . $bing_daily_img_url;
 <script src="/camagru_mvc/public/js/isvisible.js"></script>
 <script src="/camagru_mvc/public/js/addAndAnimate.js"></script>
 <script src="/camagru_mvc/public/js/ajaxLoad.js"></script>
-<?php //foreach ($news as $val): ?>
+<?php //foreach ($news as $val):
+//    var_dump($val)?>
 <!--	<h3>--><?//= $val['title']; ?><!--</h3>-->
 <!--	<p>--><?//= $val['description']; ?><!--</p>-->
 <?php //endforeach; ?>

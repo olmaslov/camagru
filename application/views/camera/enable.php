@@ -5,20 +5,19 @@
 		<a href="#" id="start-camera" class="visible">Touch here to start the app.</a>
 		<video id="camera-stream" class="" muted></video>
 		<img id="snap">
-		<img id="snap2">
 
 		<p id="error-message"></p>
 
 		<div class="controls">
-			<a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></a>
-            <a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a>
-            <a href="#" id="upload-photo" class="visible"><i class="material-icons">file_upload</i></a>
+			<button id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></button>
+            <button id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></button>
+            <button id="upload-photo" class="visible"><i class="material-icons">file_upload</i></button>
 <!--            <a href="#" id="download-photo" download="img.png" title="Save Photo" class="visible"><i class="material-icons">file_download</i></a>-->
         </div>
 
         <input type="file" style="display: none" id="upload">
 		<!-- Hidden canvas element. Used for taking snapshot of video. -->
-		<canvas id="layer1"></canvas>
+		<canvas></canvas>
         <img id="tmpimg" class="hide"/>
 
 	</div>
@@ -47,6 +46,15 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-10 textcomm">
+        <textarea id="descr"></textarea>
+    </div>
+    <div class="col-2 pcom" id="svpic">
+        <i class="material-icons sendcomm">send</i>
+    </div>
+</div>
+
 <script src="/camagru_mvc/public/js/test.js"></script>
 <script>
     (function() {
@@ -70,6 +78,10 @@
 <style>
 	/*@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');*/
 	/*@import url('https://fonts.googleapis.com/icon?family=Material+Icons+Rounded');*/
+
+    .textcomm {
+        padding: 0;
+    }
 
     .filter-gallery{
         height:10%;
@@ -155,13 +167,15 @@
 		z-index: 20;
 
 		display: flex;
-		align-items: flex-end;
-		justify-content: space-between;
+        align-items: flex-end;
+        justify-content: space-between;
 		padding: 30px;
 		display: none;
 	}
 
-	.app .controls a{
+	.app .controls button{
+        cursor: pointer;
+        border: none;
 		border-radius: 50%;
 		color: #fff;
 		background-color: #111;
@@ -173,22 +187,22 @@
 		-webkit-tap-highlight-color: transparent;
 	}
 
-	.app .controls a:hover{
+	.app .controls button:hover{
 		opacity: 1;
 	}
 
-	.app .controls a.disabled{
+	.app .controls button.disabled{
 		background-color: #555;
 		opacity: 0.5;
 		cursor: default;
 		pointer-events: none;
 	}
 
-	.app .controls a.disabled:hover{
+	.app .controls button.disabled:hover{
 		opacity: 0.5;
 	}
 
-	.app .controls a i{
+	.app .controls button i{
 		font-size: 18px;
 	}
 
@@ -237,7 +251,7 @@
 			font-size: 18px;
 		}
 
-		.app .controls a i{
+		.app .controls button i{
 			font-size: 12px;
 		}
 

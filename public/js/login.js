@@ -1,17 +1,3 @@
-// document.addEventListener('DOMContentLoaded', function() {
-// 	var forms = document.querySelectorAll('form');
-// 	forms.forEach(function (form) {
-// 		form.addEventListener('submit', function(e) {
-// 			e.preventDefault();
-// 			alert('123');
-// 		});
-// 	});
-// });
-//
-// function test(){
-//
-// }
-
 function fadeOut(el){
     el.style.opacity = 1;
 

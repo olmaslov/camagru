@@ -15,10 +15,14 @@ use application\lib\Db;
 class MainController extends Controller {
 	public function indexAction() {
 
-//		$result = $this->model->get_news();
-//		$vars = [
-//			'news' => $result
-//		];
-		$this->view->render('main page');
+		$result = $this->model->get_post('0');
+		$vars = [
+			'news' => $result
+		];
+		$this->view->render('main page', $vars);
 	}
+
+	public function getpostAction() {
+//	    $this->model->get_post($_POST['last']);
+    }
 }
