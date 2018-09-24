@@ -177,7 +177,7 @@ function intraLoginAJAX() {
                                         document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
                                         document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
                                     }
-                                }
+                                };
                                 xhr1.send('intra=' + this.responseText);
                             } else {
                                 console.log(this.status);
@@ -191,4 +191,54 @@ function intraLoginAJAX() {
         }
     }
     sc.send('secret=1');
+}
+
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+function registerSimple() {
+
+    var pass = document.querySelector('#passReg');
+    var conf = document.querySelector('#confReg');
+    var login = document.querySelector('#loginReg');
+    var email = document.querySelector('#emailReg');
+    var fname = document.querySelector('#fnameReg');
+    var lname = document.querySelector('#lnameReg');
+    if (login.value != '' && email.value != '' && pass.value != '' && conf.value != '') {
+        console.log(login.value, email.value, pass.value, conf.value);
+        if (pass.value == conf.value) {
+            if (validateEmail(document.querySelector('#emailReg').value)) {
+                var xhr1 = new XMLHttpRequest();
+                var data = "register=true&login=" + login.value +
+                    "&email=" + email.value +
+                    "&pass=" + pass.value +
+                    "&fname=" + fname.value +
+                    "&lname=" + lname.value;
+                xhr1.open("POST", '/camagru_mvc/register', true);
+                xhr1.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhr1.onreadystatechange = function () {
+                    if (this.readyState != 4) return;
+                    if (this.status == 200) {
+                        console.log(this.responseText);
+                        // var json = JSON.parse(this.responseText);
+                        // closemodal();
+                        var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
+                    }
+                };
+                xhr1.send(data);
+            }
+            else {
+                email.style.color = "red";
+            }
+        }
+        else {
+            pass.style.color = "red";
+            conf.style.color = "red";
+        }
+    }
+    else {
+
+    }
 }

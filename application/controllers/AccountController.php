@@ -41,10 +41,14 @@ class AccountController extends Controller {
 	}
 
 	public function registerAction() {
+        if (isset($_POST['register'])){
+            exit($this->model->registerSimple($_POST));
+        }
+
 		$this->view->render("register");
 	}
 
 	public function responseAction() {
-		echo "<div id='test'>success!</div>";
+		echo "<div id='test'></div>";
 	}
 }
