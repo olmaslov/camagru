@@ -24,5 +24,15 @@ return [
 	'camera' => [
 		'controller' => 'camera',
 		'action' => 'enable'
-	]
+	],
+
+    'savetodb' => [
+        'controller' => 'savetodb',
+        'action' => 'save'
+    ],
+
+    'getpost' => [
+        'controller' => 'post',
+        'action' => 'get'
+    ]
 ];

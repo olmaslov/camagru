@@ -15,15 +15,65 @@ class Db {
 
         public function __construct() {
 			$conf = require 'application/config/db.php';
-			$this->dbh = new PDO('mysql:host='.$conf['host'].';dbname='.$conf['dbname'], $conf['user'], $conf['passwd']);
+			try {
+                $this->dbh = new PDO('mysql:host=' . $conf['host'] . ';dbname=' . $conf['dbname'], $conf['user'], $conf['passwd']);
+            }
+            catch (\PDOException $e) {
+                $this->initdb($conf);
+            }
+        }
+
+        private function initdb($conf){
+            try {
+                $this->dbh = new PDO('mysql:host=' . $conf['host'], $conf['user'], $conf['passwd']);
+//                    $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $sql = "CREATE DATABASE camagru";
+                $this->dbh->exec($sql);
+                $this->dbh = new PDO('mysql:host=' . $conf['host'] . ';dbname=' . $conf['dbname'], $conf['user'], $conf['passwd']);
+                $sql = "CREATE TABLE users (
+                      id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                      login VARCHAR(30),
+                      f_name VARCHAR(30),
+                      l_name VARCHAR(30),
+                      email VARCHAR(30) NOT NULL,
+                      password VARCHAR(256),
+                      fb_id VARCHAR(256),
+                      google_id VARCHAR(256),
+                      intra_id VARCHAR(256),
+                      hash TEXT(255),
+                      code TEXT(600),
+                      token VARCHAR(600),
+                      rtoken VARCHAR(600),
+                      pic VARCHAR(600),
+                      role INT(5) NOT NULL,
+                      reg_date TIMESTAMP
+                      );
+                      CREATE TABLE posts (
+                      id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                      uid int(6),
+                      type TINYINT(1),
+                      descr VARCHAR(30),
+                      creation_date TIMESTAMP
+                      );
+                      CREATE TABLE comments (
+                      id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                      uid int(6),
+                      pid int(6),
+                      text VARCHAR(600),
+                      creation_date TIMESTAMP
+                      )";
+                $this->dbh->exec($sql);
+            } catch (\PDOException $e) {
+//                    echo $sql . "<br>" . $e->getMessage();
+            }
         }
 
         public function query($sql, $params = []) {
-        	$stmt = $this->dbh->prepare($sql);
+            $stmt = $this->dbh->prepare($sql);
         	if(!empty($params)) {
         		foreach ($params as $key =>$val) {
         			$stmt->bindValue(':'.$key, $val);
-				}
+        		}
 			}
 			$stmt->execute();
         	return $stmt;

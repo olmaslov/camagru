@@ -23,8 +23,7 @@
 						<p class="col-sm-4 social-login" onclick="fbLoginAJAX()"><i class="fab fa-facebook-square"></i></p>
 						<p class="col-sm-4 social-login" onclick="glLoginAJAX()"><i class="fab fa-google-plus-square"></i></p>
 						<p class="col-sm-4 social-login" onclick="intraLoginAJAX()"><img class="icon_42" src="/camagru_mvc/public/img/42_icon.png"></p>
-					</div
-					<form method="post" action="#">
+					</div>
 						<div class="row justify-content-center texts">
 							<input type="text" name="" class="inp-log col-sm-10" value="" placeholder="Login">
 						</div>
@@ -34,7 +33,6 @@
 						<div class="row justify-content-center texts">
 							<input type="submit" name="" class="log-bnt inp-log col-sm-10" value="Login">
 						</div>
-					</form>
 					<div class="row justify-content-center texts checks">
 						<div class="custom-control custom-checkbox mr-sm-2 col-sm-4">
 							<input type="checkbox" class="custom-control-input" checked id="customControlAutosizing">
