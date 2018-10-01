@@ -1,3 +1,9 @@
+// document.addEventListener('DOMContentLoaded', function() {
+//     var modal2 = document.querySelector('.modal-2');
+//
+//     console.log(modal2.style.height);
+// });
+
 var fade = function () {
         return {
             num_step:0,
@@ -77,13 +83,14 @@ navigator.getUserMedia = (navigator.getUserMedia ||
 var isFirefox = typeof InstallTrigger !== 'undefined';
 var isChrome = !!window.chrome && !!window.chrome.webstore;
 
+
 if (navigator.getUserMedia) {
     console.log('getUserMedia supported.');
 
     if(isChrome){
-        var constraints = {"audio": true, "video": { "mandatory": { "minWidth": 600, "maxWidth": 1936, "minHeight": 600,"maxHeight": 1936 }, "optional": [] } };
+        var constraints = {"audio": true, "video": { "mandatory": { "minWidth": 1, "maxWidth": 1936, "minHeight": 1,"maxHeight": 1936 }, "optional": [] } };
     }else if(isFirefox){
-        var constraints = {audio: true,video: { width: { min: 600, ideal: 850, max: 1936 }, height: { min: 600, ideal: 850, max: 1936 }}};
+        var constraints = {audio: true,video: { width: { min: 1, ideal: 850, max: 1936 }, height: { min: 1, ideal: 850, max: 1936 }}};
     }
     var chunks = [];
 
@@ -96,6 +103,9 @@ if (navigator.getUserMedia) {
 
         visualize(stream);
 
+		var modal2 = document.querySelector('.modal-2');
+
+		console.log(modal2.style.height);
 
         record.onmousedown = function (){timeoutID = setTimeout(function(){timer = true;
         var fef_block = new fade();
@@ -164,7 +174,7 @@ if (navigator.getUserMedia) {
     }
 
     var onError = function(err) {
-        console.log('The following error occured: ' + err);
+        console.error('The following error occured: ' + err);
     }
 
     navigator.getUserMedia(constraints, onSuccess, onError);
