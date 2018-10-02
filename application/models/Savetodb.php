@@ -14,6 +14,6 @@ class Savetodb extends Model {
     public function save_post($params) {
         $this->db->query("INSERT INTO `posts` (`uid`, `type`, `descr`) VALUES (:uid, :type, :descr)", $params);
         $result = $this->db->row("SELECT LAST_INSERT_ID()");
-        return $result[0]['LAST_INSERT_ID()'];
+        return $result['LAST_INSERT_ID()'];
     }
 }

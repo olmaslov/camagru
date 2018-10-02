@@ -1,4 +1,4 @@
-function fadeOut(el){
+function fadeOut(el) {
     el.style.opacity = 1;
 
     (function fade() {
@@ -10,7 +10,7 @@ function fadeOut(el){
     })();
 }
 
-function fadeIn(el, display){
+function fadeIn(el, display) {
     el.style.opacity = 0;
     el.style.display = display || "block";
 
@@ -32,14 +32,16 @@ function closemodal2() {
     var el = document.getElementById('modal-content2');
     fadeOut(el);
     // Stop stream
-    try{
-    let stream = video.srcObject;
-    let tracks = stream.getTracks();
+    try {
+        let stream = video.srcObject;
+        let tracks = stream.getTracks();
 
-    tracks.forEach(function (track) {
-        track.stop();
-    });}
-    catch {}
+        tracks.forEach(function (track) {
+            track.stop();
+        });
+    }
+    catch {
+    }
 }
 
 function fbLoginAJAX() {
@@ -52,11 +54,11 @@ function fbLoginAJAX() {
         "&response_type=token",
         'hello',
         "width=500,height=500,location=no");
-    var si = setInterval(function(){
+    var si = setInterval(function () {
         try {
-            if(nw.document.getElementById('test') != null){
+            if (nw.document.getElementById('test') != null) {
                 clearInterval(si);
-				nw.window.close();
+                nw.window.close();
                 var arr = nw.window.location.hash.split('&');
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", '/camagru_mvc/login', true);
@@ -64,8 +66,8 @@ function fbLoginAJAX() {
                 xhr.onreadystatechange = function () {
                     if (this.readyState != 4) return;
                     if (this.status == 200) {
-						console.log(this.responseText);
-						closemodal();
+                        console.log(this.responseText);
+                        closemodal();
                         var json = JSON.parse(this.responseText);
                         var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
                         document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
@@ -77,11 +79,12 @@ function fbLoginAJAX() {
                 xhr.send('fb=log&' + arr[1]);
             }
         }
-        catch (error){}
-        }, 100);
+        catch (error) {
+        }
+    }, 100);
 }
 
-function glLoginAJAX(){
+function glLoginAJAX() {
     var url = "https://accounts.google.com/o/oauth2/auth?" +
         "client_id=245891107304-9kdpi7gnc9b9r1711nefuksgdo5l5dk6.apps.googleusercontent.com" +
         "&response_type=id_token" +
@@ -94,11 +97,11 @@ function glLoginAJAX(){
         "width=500,height=500");
 
     nw.location = url;
-    var si = setInterval(function(){
+    var si = setInterval(function () {
         try {
             if (nw.document.getElementById('test') != null) {
                 clearInterval(si);
-				nw.window.close();
+                nw.window.close();
                 var arr = nw.window.location.hash.split('&');
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", '/camagru_mvc/login', true);
@@ -107,7 +110,7 @@ function glLoginAJAX(){
                     if (this.readyState != 4) return;
                     if (this.status == 200) {
                         var json = JSON.parse(this.responseText);
-						closemodal();
+                        closemodal();
                         var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
                         document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
                         document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
@@ -118,7 +121,8 @@ function glLoginAJAX(){
                 xhr.send('google=' + arr[1].replace('id_token=', ''));
             }
         }
-        catch (error){}
+        catch (error) {
+        }
     }, 100);
 }
 
@@ -148,20 +152,20 @@ function intraLoginAJAX() {
                 "response_type=code&" +
                 "state=intra";
             nw.location = url;
-            var si = setInterval(function(){
+            var si = setInterval(function () {
                 try {
                     if (nw.document.getElementById('test') != null) {
                         var code = getParameterByName("code", nw.window.location.href);
                         nw.window.close();
                         clearInterval(si);
                         var xhr = new XMLHttpRequest();
-						var req = "grant_type=authorization_code" +
+                        var req = "grant_type=authorization_code" +
                             "&client_id=9f8b87fd8fba4e08b51442b8a533cfa07b303949a6f9e86a99f8dcedea067d1f" +
                             "&client_secret=" + secret +
                             "&code=" + code +
                             "&redirect_uri=https%3A%2F%2Flocalhost%3A8443%2Fcamagru_mvc%2Faccount%2Fresponse";
-						xhr.open("POST", 'https://api.intra.42.fr/oauth/token', true);
-						xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                        xhr.open("POST", 'https://api.intra.42.fr/oauth/token', true);
+                        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                         xhr.onreadystatechange = function () {
                             if (this.readyState != 4) return;
                             if (this.status == 200) {
@@ -172,7 +176,7 @@ function intraLoginAJAX() {
                                     if (this.readyState != 4) return;
                                     if (this.status == 200) {
                                         var json = JSON.parse(this.responseText);
-										closemodal();
+                                        closemodal();
                                         var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
                                         document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
                                         document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
@@ -186,7 +190,8 @@ function intraLoginAJAX() {
                         xhr.send(req);
                     }
                 }
-                catch (error){}
+                catch (error) {
+                }
             }, 100);
         }
     }
@@ -198,6 +203,17 @@ function validateEmail(email) {
     return re.test(String(email).toLowerCase());
 }
 
+function validateLogin(login) {
+    var re = /^([\S]{0,})$/;
+    return re.test(String(login).toLowerCase());
+}
+
+function validateName(name) {
+    var re = /^([a-zа-яё]+|\d+)$/;
+    return re.test(String(name).toLowerCase());
+}
+
+
 function registerSimple() {
 
     var pass = document.querySelector('#passReg');
@@ -206,28 +222,41 @@ function registerSimple() {
     var email = document.querySelector('#emailReg');
     var fname = document.querySelector('#fnameReg');
     var lname = document.querySelector('#lnameReg');
-    if (login.value != '' && email.value != '' && pass.value != '' && conf.value != '') {
+    if (login.value != '' && email.value != '' && pass.value != '' && conf.value != '' && fname != '' && lname != '') {
         console.log(login.value, email.value, pass.value, conf.value);
         if (pass.value == conf.value) {
-            if (validateEmail(document.querySelector('#emailReg').value)) {
-                var xhr1 = new XMLHttpRequest();
-                var data = "register=true&login=" + login.value +
-                    "&email=" + email.value +
-                    "&pass=" + pass.value +
-                    "&fname=" + fname.value +
-                    "&lname=" + lname.value;
-                xhr1.open("POST", '/camagru_mvc/register', true);
-                xhr1.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                xhr1.onreadystatechange = function () {
-                    if (this.readyState != 4) return;
-                    if (this.status == 200) {
-                        console.log(this.responseText);
-                        // var json = JSON.parse(this.responseText);
-                        // closemodal();
-                        var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
+            if (validateEmail(email.value)) {
+                if (validateLogin(login.value)) {
+                    if (validateName(fname.value) && validateName(lname.value)) {
+                        var xhr1 = new XMLHttpRequest();
+                        var data = "register=true&login=" + login.value +
+                            "&email=" + email.value +
+                            "&pass=" + pass.value +
+                            "&fname=" + fname.value +
+                            "&lname=" + lname.value;
+                        xhr1.open("POST", '/camagru_mvc/register', true);
+                        xhr1.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                        xhr1.onreadystatechange = function () {
+                            if (this.readyState != 4) return;
+                            if (this.status == 200) {
+                                console.log(this.responseText);
+                                var json = JSON.parse(this.responseText);
+                                closemodal();
+                                var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
+                                document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
+                                document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
+                            }
+                        };
+                        xhr1.send(data);
                     }
-                };
-                xhr1.send(data);
+                    else {
+                        fname.style.color = "red";
+                        lname.style.color = "red";
+                    }
+                }
+                else {
+                    login.style.color = "red";
+                }
             }
             else {
                 email.style.color = "red";
@@ -237,6 +266,45 @@ function registerSimple() {
             pass.style.color = "red";
             conf.style.color = "red";
         }
+    }
+    else {
+
+    }
+}
+
+function simpleLogin() {
+    var login = document.querySelector('#logLogin');
+    var pass = document.querySelector('#logPass');
+    if (login.value != '' && pass.value != '') {
+        // console.log(login.value);
+        // console.log(pass.value);
+        var xhr1 = new XMLHttpRequest();
+        var data = "simple=true&login=" + login.value +
+            "&pass=" + pass.value;
+        xhr1.open("POST", '/camagru_mvc/login', true);
+        xhr1.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr1.onreadystatechange = function () {
+            if (this.readyState != 4) return;
+            if (this.status == 200) {
+                console.log(this.responseText);
+                var json = JSON.parse(this.responseText);
+                if (json.code != 1){
+                    if (json.code == 2){
+                        pass.style.color = "red";
+                    }
+                    else {
+                        alert('User does not exist. Please check data');
+                    }
+                }
+                else {
+                    closemodal();
+                    var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
+                    document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
+                    document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
+                }
+            }
+        };
+        xhr1.send(data);
     }
     else {
 
