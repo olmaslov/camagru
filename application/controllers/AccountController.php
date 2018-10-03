@@ -10,12 +10,12 @@ namespace application\controllers;
 
 use application\core\Controller;
 
+use application\core\View;
 use PDO;
 
 class AccountController extends Controller
 {
-    public function loginAction()
-    {
+    public function loginAction() {
         if (isset($_POST['intra'])) {
             $token = json_decode($_POST['intra']);
             exit ($this->model->intraLogin($token));
@@ -44,8 +44,7 @@ class AccountController extends Controller
 
     }
 
-    public function registerAction()
-    {
+    public function registerAction() {
         if (isset($_POST['register'])) {
             exit($this->model->registerSimple($_POST));
         }
@@ -53,8 +52,33 @@ class AccountController extends Controller
         $this->view->render("register");
     }
 
-    public function responseAction()
-    {
+    public function responseAction() {
         echo "<div id='test'></div>";
     }
+
+    public function myAction(){
+    	$res = json_decode($this->funk->checkAcc($_COOKIE));
+    	if ($res->code == 0) {
+			$this->view->render("my");
+		}
+		else {
+			header('Location: login#my');
+		}
+	}
+
+	public function adminAction(){
+		$res = json_decode($this->funk->checkAcc($_COOKIE));
+		if ($res->code == 0) {
+			if ($res->role == 1) {
+				$this->view->render("admin");
+			}
+			else
+			{
+				View::errorCode(403);
+			}
+		}
+		else {
+			header('Location: login#admin');
+		}
+	}
 }

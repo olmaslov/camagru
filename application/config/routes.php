@@ -34,5 +34,15 @@ return [
     'getpost' => [
         'controller' => 'post',
         'action' => 'get'
-    ]
+    ],
+
+	'my' => [
+		'controller' => 'account',
+		'action' => 'my'
+	],
+
+	'admin' => [
+		'controller' => 'account',
+		'action' => 'admin'
+	]
 ];

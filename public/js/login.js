@@ -67,11 +67,12 @@ function fbLoginAJAX() {
                     if (this.readyState != 4) return;
                     if (this.status == 200) {
                         console.log(this.responseText);
-                        closemodal();
+                        // closemodal();
                         var json = JSON.parse(this.responseText);
                         var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
                         document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
                         document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
+						location.replace(location.hash.substr(1));
                     } else {
                         console.log(this.status);
                     }
@@ -110,10 +111,11 @@ function glLoginAJAX() {
                     if (this.readyState != 4) return;
                     if (this.status == 200) {
                         var json = JSON.parse(this.responseText);
-                        closemodal();
+                        // closemodal();
                         var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
                         document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
                         document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
+						location.replace(location.hash.substr(1));
                     } else {
                         console.log(this.status);
                     }
@@ -176,10 +178,11 @@ function intraLoginAJAX() {
                                     if (this.readyState != 4) return;
                                     if (this.status == 200) {
                                         var json = JSON.parse(this.responseText);
-                                        closemodal();
+                                        // closemodal();
                                         var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
                                         document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
                                         document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
+										location.replace(location.hash.substr(1));
                                     }
                                 };
                                 xhr1.send('intra=' + this.responseText);
@@ -241,11 +244,12 @@ function registerSimple() {
                             if (this.status == 200) {
                                 console.log(this.responseText);
                                 var json = JSON.parse(this.responseText);
-                                closemodal();
                                 var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
-                                document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
-                                document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
-                            }
+								document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
+								document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
+								// closemodal();
+								location.replace(location.hash.substr(1));
+							}
                         };
                         xhr1.send(data);
                     }
@@ -297,11 +301,12 @@ function simpleLogin() {
                     }
                 }
                 else {
-                    closemodal();
+                    // console.log();
                     var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
-                    document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
-                    document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
-                }
+					document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
+					document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
+					location.replace((location.hash.substr(1) != '') ? location.hash.substr(1) : '/camagru_mvc');
+				}
             }
         };
         xhr1.send(data);

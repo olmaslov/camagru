@@ -17,7 +17,7 @@ class Account extends Model
     {
         $info = json_decode(file_get_contents("https://api.intra.42.fr/v2/me?access_token={$token->access_token}"));
 
-        $hash = generateCode();
+        $hash = $this->funk->generateCode();
         $jsonret = array();
         $res = $this->db->row("SELECT * from users WHERE email = '" . $info->email . "'");
         if (!$res) {
@@ -58,7 +58,7 @@ VALUES (:email, :first_name, :last_name, :id, :atoken, :rtoken,  :img, '2', :has
         $photos = $finfo->photos;
 
 
-        $hash = generateCode();
+        $hash = $this->funk->generateCode();
         $jsonret = array();
         $res = $this->db->row("SELECT * from users WHERE email = '" . $info->email . "'");
         if (!$res) {
@@ -97,7 +97,7 @@ VALUES (:email, :first_name, :last_name, :id, :img, 2, :hash)",
         $lname = json_decode(file_get_contents("https://graph.facebook.com/{$info->data->user_id}?fields=last_name&access_token={$access_token}"));
         $email = json_decode(file_get_contents("https://graph.facebook.com/{$info->data->user_id}?fields=email&access_token={$access_token}"));
 
-        $hash = generateCode();
+        $hash = $this->funk->generateCode();
         $jsonret = array();
         $res = $this->db->row("SELECT * from users WHERE email = '" . $email->email . "'");
         if (!$res) {
@@ -130,7 +130,7 @@ VALUES (:email, :first_name, :last_name, :id, :atoken, :img, '2', :hash)", $para
 
     public function registerSimple($args)
     {
-        $hash = generateCode();
+        $hash = $this->funk->generateCode();
         $jsonret = array();
         $res = $this->db->row("SELECT * from users WHERE email = '" . $args['email'] . "'");
         $res2 = $this->db->row("SELECT * from users WHERE login = '" . $args['login'] . "'");
@@ -162,7 +162,7 @@ VALUES (:email, :first_name, :last_name, :pass, :login, '2', :hash)", $params);
         $ret = array();
         if ($res) {
             if ($res['password'] == hash('md5', $args['pass'])) {
-                $ret['hash'] = generateCode();
+                $ret['hash'] = $this->funk->generateCode();
                 $ret['id'] = $res['id'];
                 $ret['code'] = 1;
 
@@ -179,7 +179,4 @@ VALUES (:email, :first_name, :last_name, :pass, :login, '2', :hash)", $params);
         }
     }
 
-    public function checkAcc($args){
-
-    }
 }

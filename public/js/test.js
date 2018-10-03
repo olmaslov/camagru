@@ -2,7 +2,7 @@ function changeSize() {
     var mod2 = document.querySelector('.modal-2');
     var m2 = 'calc(50% - ' + (mod2.clientHeight / 2) + 'px)';
     mod2.style.top = m2;
-    console.log(m2);
+    // console.log(m2);
 }
 
 var fade = function () {
@@ -88,9 +88,9 @@ var isChrome = !!window.chrome && !!window.chrome.webstore;
 
 if (navigator.getUserMedia) {
     if(isChrome){
-        var constraints = {"audio": true, "video": { "mandatory": { "minWidth": 600, "maxWidth": 1936, "minHeight": 600,"maxHeight": 1936 }, "optional": [] } };
+        var constraints = {"audio": true, "video": true};
     }else if(isFirefox){
-        var constraints = {audio: true,video: { width: { min: 600, ideal: 850, max: 1936 }, height: { min: 600, ideal: 850, max: 1936 }}};
+        var constraints = {audio: true,video: true};
     }
     var chunks = [];
 
@@ -119,10 +119,7 @@ if (navigator.getUserMedia) {
         record.onmouseup = function() {
             if (!ready) {
                 if (timer == true) {
-                    console.log('true');
                     mediaRecorder.stop();
-                    console.log(mediaRecorder.state);
-                    console.log("recorder stopped");
                     record.style.background = "";
                     record.style.color = "";
 
@@ -334,9 +331,8 @@ savepic.addEventListener("click", function (e) {
             xhr.onreadystatechange = function () {
                 if (this.readyState != 4) return;
                 if (this.status == 200) {
-                    console.log(this.responseText);
                 } else {
-                    console.log(this.status);
+                    // console.log(this.status);
                 }
             };
             xhr.send(fd);
@@ -352,9 +348,8 @@ savepic.addEventListener("click", function (e) {
         xhr.onreadystatechange = function () {
             if (this.readyState != 4) return;
             if (this.status == 200) {
-                console.log(this.responseText);
             } else {
-                console.log(this.status);
+                // console.log(this.status);
             }
         };
         xhr.send(fd);

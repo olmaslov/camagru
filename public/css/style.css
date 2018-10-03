@@ -57,6 +57,27 @@ body {
   z-index: 700;
 }
 
+.modal-my {
+  /*height: 34rem;*/
+  left: calc(50% - 15rem);
+  max-width: 30rem;
+  top: calc(50% - 16.5rem);
+  padding: 50px;
+  width: 100%;
+  z-index: 700;
+}
+
+.modal-admin {
+  /*height: 34rem;*/
+  left: calc(50% - 30rem);
+  max-width: 60rem;
+  top: 5%;
+  padding: 50px;
+  height: 90%;
+  width: 100%;
+  z-index: 700;
+}
+
 .modal-2 {
   /*height: 38rem;*/
   left: calc(50% - 25rem);
@@ -67,7 +88,7 @@ body {
   z-index: 700;
 }
 
-.modal-1, .modal-2{
+.modal-1, .modal-2, .modal-admin, .modal-my{
   background-color: rgba(255, 255, 255, 0.4);
   border-radius: 15px;
   /*height: 100%;*/
@@ -381,6 +402,24 @@ textarea {
   }
 }
 
+
+/*admin panel*/
+
+.left-admin {
+  height: 100%;
+  border-radius: 10px 0 0 10px;
+  background: black;
+}
+
+.right-admin {
+  border-radius: 0 10px 10px 0;
+  height: 100%;
+  background: blue;
+}
+
+.admin-inner {
+  height: 100%;
+}
 
 
 /* scrollbar */
