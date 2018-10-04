@@ -14,7 +14,7 @@ class Db {
 		protected  $dbh;
 
         public function __construct() {
-			$conf = require 'application/config/db.php';
+			$conf = require 'config/database.php';
 			try {
                 $this->dbh = new PDO('mysql:host=' . $conf['host'] . ';dbname=' . $conf['dbname'], $conf['user'], $conf['passwd']);
             }
@@ -23,10 +23,9 @@ class Db {
             }
         }
 
-        private function initdb($conf){
+	private function initdb($conf) {
             try {
                 $this->dbh = new PDO('mysql:host=' . $conf['host'], $conf['user'], $conf['passwd']);
-//                    $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $sql = "CREATE DATABASE camagru";
                 $this->dbh->exec($sql);
                 $this->dbh = new PDO('mysql:host=' . $conf['host'] . ';dbname=' . $conf['dbname'], $conf['user'], $conf['passwd']);
@@ -46,6 +45,7 @@ class Db {
                       rtoken VARCHAR(600),
                       pic VARCHAR(600),
                       role INT(5) NOT NULL,
+                      verified TINYINT(1),
                       reg_date TIMESTAMP
                       );
                       CREATE TABLE posts (

@@ -226,7 +226,7 @@ function registerSimple() {
     var fname = document.querySelector('#fnameReg');
     var lname = document.querySelector('#lnameReg');
     if (login.value != '' && email.value != '' && pass.value != '' && conf.value != '' && fname != '' && lname != '') {
-        console.log(login.value, email.value, pass.value, conf.value);
+        // console.log(login.value, email.value, pass.value, conf.value);
         if (pass.value == conf.value) {
             if (validateEmail(email.value)) {
                 if (validateLogin(login.value)) {

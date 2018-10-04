@@ -141,12 +141,14 @@ VALUES (:email, :first_name, :last_name, :id, :atoken, :img, '2', :hash)", $para
                 'last_name' => $args['lname'],
                 'pass' => hash('md5', $args['pass']),
                 'login' => $args['login'],
-                'hash' => $hash
+                'hash' => $hash,
             ];
             $this->db->query("INSERT INTO `users` 
 (`email`, `f_name`, `l_name`, `password`, `login`, `role`, `hash`) 
 VALUES (:email, :first_name, :last_name, :pass, :login, '2', :hash)", $params);
             $query = $this->db->row("SELECT * from users WHERE email = '" . $args['email'] . "'");
+//          $mail = mail($args['email'], 'Plaese verify your account', 'hi');
+//          print_r($mail);
             $jsonret['hash'] = $hash;
             $jsonret['id'] = $query['id'];
             return (json_encode($jsonret));
@@ -178,5 +180,9 @@ VALUES (:email, :first_name, :last_name, :pass, :login, '2', :hash)", $params);
             return json_encode($ret);
         }
     }
+
+    public function verifyEmail($args) {
+//    	$res =
+	}
 
 }
