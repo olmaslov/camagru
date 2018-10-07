@@ -44,5 +44,10 @@ return [
 	'admin' => [
 		'controller' => 'account',
 		'action' => 'admin'
+	],
+
+	'install' => [
+		'controller' => 'install',
+		'action' => 'install'
 	]
 ];

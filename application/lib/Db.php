@@ -11,25 +11,31 @@ namespace application\lib;
 use PDO;
 
 class Db {
-		protected  $dbh;
+	protected $dbh;
+	private $err = 0;
 
-        public function __construct() {
-			$conf = require 'config/database.php';
-			try {
-                $this->dbh = new PDO('mysql:host=' . $conf['host'] . ';dbname=' . $conf['dbname'], $conf['user'], $conf['passwd']);
-            }
-            catch (\PDOException $e) {
-                $this->initdb($conf);
-            }
-        }
+	public function __construct() {
+		$conf = require 'config/database.php';
+		try {
+			$this->dbh = new PDO('mysql:host=' . $conf['host'] . ';dbname=' . $conf['dbname'], $conf['user'], $conf['passwd']);
+		} catch (\PDOException $e) {
+//			$this->initdb();
+			$this->err = 1;
+		}
+	}
 
-	private function initdb($conf) {
-            try {
-                $this->dbh = new PDO('mysql:host=' . $conf['host'], $conf['user'], $conf['passwd']);
-                $sql = "CREATE DATABASE camagru";
-                $this->dbh->exec($sql);
-                $this->dbh = new PDO('mysql:host=' . $conf['host'] . ';dbname=' . $conf['dbname'], $conf['user'], $conf['passwd']);
-                $sql = "CREATE TABLE users (
+	public function test() {
+		return $this->err;
+	}
+
+	public function initdb() {
+		$conf = require 'config/database.php';
+		try {
+			$this->dbh = new PDO('mysql:host=' . $conf['host'], $conf['user'], $conf['passwd']);
+			$sql = "CREATE DATABASE " .$conf['dbname'];
+			$this->dbh->exec($sql);
+			$this->dbh = new PDO('mysql:host=' . $conf['host'] . ';dbname=' . $conf['dbname'], $conf['user'], $conf['passwd']);
+			$sql = "CREATE TABLE users (
                       id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                       login VARCHAR(30),
                       f_name VARCHAR(30),
@@ -62,30 +68,30 @@ class Db {
                       text VARCHAR(600),
                       creation_date TIMESTAMP
                       )";
-                $this->dbh->exec($sql);
-            } catch (\PDOException $e) {
-//                    echo $sql . "<br>" . $e->getMessage();
-            }
-        }
+			$this->dbh->exec($sql);
+		} catch (\PDOException $e) {
+                    echo $sql . "<br>" . $e->getMessage();
+		}
+	}
 
-        public function query($sql, $params = []) {
-            $stmt = $this->dbh->prepare($sql);
-        	if(!empty($params)) {
-        		foreach ($params as $key =>$val) {
-        			$stmt->bindValue(':'.$key, $val);
-        		}
+	public function query($sql, $params = []) {
+		$stmt = $this->dbh->prepare($sql);
+		if (!empty($params)) {
+			foreach ($params as $key => $val) {
+				$stmt->bindValue(':' . $key, $val);
 			}
-			$stmt->execute();
-        	return $stmt;
-        }
-
-        public function row($sql, $params = []){
-        	$result = $this->query($sql, $params);
-        	return $result->fetch(PDO::FETCH_ASSOC);
 		}
+		$stmt->execute();
+		return $stmt;
+	}
 
-		public function column($sql, $params = []) {
-        	$result = $this->query($sql, $params);
-        	return $result->fetchColumn();
-		}
+	public function row($sql, $params = []) {
+		$result = $this->query($sql, $params);
+		return $result->fetch(PDO::FETCH_ASSOC);
+	}
+
+	public function column($sql, $params = []) {
+		$result = $this->query($sql, $params);
+		return $result->fetchColumn();
+	}
 }

@@ -27,7 +27,7 @@ class View {
 			$content = ob_get_clean();
 			require 'application/views/layouts/' . $this->layout . '.php';
 		} else {
-			echo "Error: View not found(";
+			echo "Error: View not found";
 		}
 	}
 

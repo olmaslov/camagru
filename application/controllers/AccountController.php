@@ -13,8 +13,7 @@ use application\core\Controller;
 use application\core\View;
 use PDO;
 
-class AccountController extends Controller
-{
+class AccountController extends Controller {
     public function loginAction() {
         if (isset($_POST['intra'])) {
             $token = json_decode($_POST['intra']);
