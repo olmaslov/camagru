@@ -128,8 +128,7 @@ VALUES (:email, :first_name, :last_name, :id, :atoken, :img, '2', :hash)", $para
         }
     }
 
-    public function registerSimple($args)
-    {
+    public function registerSimple($args){
         $hash = $this->funk->generateCode();
         $jsonret = array();
         $res = $this->db->row("SELECT * from users WHERE email = '" . $args['email'] . "'");
@@ -147,8 +146,10 @@ VALUES (:email, :first_name, :last_name, :id, :atoken, :img, '2', :hash)", $para
 (`email`, `f_name`, `l_name`, `password`, `login`, `role`, `hash`) 
 VALUES (:email, :first_name, :last_name, :pass, :login, '2', :hash)", $params);
             $query = $this->db->row("SELECT * from users WHERE email = '" . $args['email'] . "'");
-//          $mail = mail($args['email'], 'Plaese verify your account', 'hi');
-//          print_r($mail);
+            $mail = array();
+            $mail['hash'] = $hash;
+            $mail['id'] = $query['id'];
+            $this->funk->sendValidationMail($mail);
             $jsonret['hash'] = $hash;
             $jsonret['id'] = $query['id'];
             return (json_encode($jsonret));
@@ -158,8 +159,7 @@ VALUES (:email, :first_name, :last_name, :pass, :login, '2', :hash)", $params);
         }
     }
 
-    public function loginSimple($args)
-    {
+    public function loginSimple($args){
         $res = $this->db->row("SELECT * from users WHERE login = '" . $args['login'] . "'");
         $ret = array();
         if ($res) {
@@ -168,7 +168,7 @@ VALUES (:email, :first_name, :last_name, :pass, :login, '2', :hash)", $params);
                 $ret['id'] = $res['id'];
                 $ret['code'] = 1;
 
-                $this->db->query("UPDATE `users` SET `hash`= '" .$ret['hash']. "' WHERE `id`= '" .$ret['id']. "';");
+                $this->db->query("UPDATE `users` SET `hash`= '" . $ret['hash'] . "' WHERE `id`= '" . $ret['id'] . "';");
 
                 return json_encode($ret);
             } else {
@@ -181,8 +181,30 @@ VALUES (:email, :first_name, :last_name, :pass, :login, '2', :hash)", $params);
         }
     }
 
-    public function verifyEmail($args) {
-//    	$res =
-	}
+    public function verifyEmail($args){
+        $res = $this->db->row("SELECT * from users WHERE id = '" . $args['id'] . "'");
+        if ($res) {
+            if ($res['hash'] == $args['hash']){
+                $this->db->query("UPDATE `users` SET `verified`= '1' WHERE `id`= '" . $args['id'] . "';");
+                return 1;
+            }
+            else
+                return 0;
+        }
+    }
+
+    public function resendEmail($args){
+        if(isset($args['hash']) && isset($args['id'])){
+            $res = $this->db->row("SELECT * from users WHERE id = '" . $args['id'] . "' AND hash = '" .$args['hash']. "'");
+            if($res){
+                $this->funk->sendValidationMail($args);
+                return 1;
+            }
+            else
+                return 0;
+        }
+        else
+            return 0;
+    }
 
 }

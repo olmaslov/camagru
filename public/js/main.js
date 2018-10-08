@@ -13,7 +13,8 @@ function installCamagru() {
 		"&pass=" + db_pass.value +
 		"&login=" + adm_log.value +
 		"&apass=" + adm_pass.value +
-		"&mail=" + adm_mail.value;
+		"&mail=" + adm_mail.value +
+		"&std=0";
 	xhr1.open("POST", '/camagru_mvc/install', true);
 	xhr1.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	xhr1.onreadystatechange = function () {

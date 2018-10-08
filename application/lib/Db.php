@@ -12,7 +12,7 @@ use PDO;
 
 class Db {
 	protected $dbh;
-	private $err = 0;
+	public $err = 0;
 
 	public function __construct() {
 		$conf = require 'config/database.php';
@@ -70,7 +70,7 @@ class Db {
                       )";
 			$this->dbh->exec($sql);
 		} catch (\PDOException $e) {
-                    echo $sql . "<br>" . $e->getMessage();
+                    echo $e->getMessage();
 		}
 	}
 

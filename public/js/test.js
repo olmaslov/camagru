@@ -1,5 +1,5 @@
 function changeSize() {
-    var mod2 = document.querySelector('.modal-2');
+    var mod2 = document.querySelector('.modal-camera');
     var m2 = 'calc(50% - ' + (mod2.clientHeight / 2) + 'px)';
     mod2.style.top = m2;
     // console.log(m2);

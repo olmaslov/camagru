@@ -2,19 +2,29 @@
 
 namespace application\core;
 
+use application\lib\Db;
+
 class Router {
 
 	protected $routes = [];
 	protected $params = [];
+	protected $db;
 
     function __construct() {
 		$arr = require 'application/config/routes.php';
+		$this->db = new Db();
 		foreach ($arr as $key => $value) {
 			$this->add($key, $value);
     	}
     }
 
     public function add($route, $params) {
+        if ($this->db->err == 1 && $params['controller'] != 'install') {
+            $params = [
+              'controller' => 'install',
+              'action' => 'install'
+            ];
+        }
 		$route = '#^'.$route.'$#';
 		$this->routes[$route] = $params;
 	}
@@ -34,8 +44,8 @@ class Router {
 	}
 
 	public function run() {
-    	if ($this->match()){
-    		$classpath = 'application\controllers\\'.ucfirst($this->params['controller']).'Controller';
+        if ($this->match()){
+            $classpath = 'application\controllers\\'.ucfirst($this->params['controller']).'Controller';
 			if (!class_exists($classpath)){
 				View::errorCode(404);
 			} else {

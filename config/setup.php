@@ -22,6 +22,6 @@ if ($args['std'] == 0){
 				'hash' => $hash
 			];
 			$this->db->query("INSERT INTO `users` 
-(`email`, `password`, `login`, `role`, `hash`) 
-VALUES (:email, :pass, :login, '1', :hash)", $params);
+(`email`, `password`, `login`, `role`, `hash`, `verified`) 
+VALUES (:email, :pass, :login, '1', :hash, '1')", $params);
 }

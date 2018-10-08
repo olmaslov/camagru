@@ -15,4 +15,8 @@ class CameraController extends Controller {
 	public function enableAction() {
 		$this->view->render('main page');
 	}
+
+	public function cameraAction() {
+	    $this->view->render('camera');
+    }
 }

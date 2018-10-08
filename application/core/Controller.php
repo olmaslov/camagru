@@ -10,6 +10,7 @@ namespace application\core;
 
 use application\lib\Functions;
 
+
 abstract class Controller {
 
 	public $route;
@@ -25,8 +26,8 @@ abstract class Controller {
 	}
 
 	public function loadmodel($name) {
-		$path = 'application\models\\'.ucfirst($name);
-		if (class_exists($path)){
+        $path = 'application\models\\'.ucfirst($name);
+        if (class_exists($path)){
 			return new $path();
 		}
 	}

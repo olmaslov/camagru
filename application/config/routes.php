@@ -26,6 +26,11 @@ return [
         'action' => 'enable'
     ],
 
+    'take_photo' => [
+        'controller' => 'camera',
+        'action' => 'camera'
+    ],
+
     'savetodb' => [
         'controller' => 'savetodb',
         'action' => 'save'
@@ -44,6 +49,11 @@ return [
 	'admin' => [
 		'controller' => 'account',
 		'action' => 'admin'
+	],
+
+    'resend' => [
+        'controller' => 'account',
+        'action' => 'resend'
 	],
 
 	'install' => [

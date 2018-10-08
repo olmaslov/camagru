@@ -78,6 +78,17 @@ body {
   z-index: 700;
 }
 
+.modal-camera{
+  /*height: 34rem;*/
+  left: calc(50% - 30rem);
+  max-width: 60rem;
+  top: 5%;
+  padding: 50px;
+  height: 90%;
+  width: 100%;
+  z-index: 700;
+}
+
 .modal-2 {
   /*height: 38rem;*/
   left: calc(50% - 25rem);
@@ -88,7 +99,7 @@ body {
   z-index: 700;
 }
 
-.modal-1, .modal-2, .modal-admin, .modal-my{
+.modal-1, .modal-2, .modal-admin, .modal-my, .modal-camera{
   background-color: rgba(255, 255, 255, 0.4);
   border-radius: 15px;
   /*height: 100%;*/

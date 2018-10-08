@@ -48,6 +48,12 @@ class AccountController extends Controller {
             exit($this->model->registerSimple($_POST));
         }
 
+        if (isset($_GET['hash'])) {
+            if ($this->model->verifyEmail($_GET) == 1){
+                header('Location: login#');
+            }
+        }
+
         $this->view->render("register");
     }
 
@@ -60,6 +66,9 @@ class AccountController extends Controller {
     	if ($res->code == 0) {
 			$this->view->render("my");
 		}
+		elseif ($res->code == 2) {
+    	    View::errorCode(499);
+        }
 		else {
 			header('Location: login#my');
 		}
@@ -80,4 +89,14 @@ class AccountController extends Controller {
 			header('Location: login#admin');
 		}
 	}
+
+	public function resendAction(){
+	    if (isset($_COOKIE['hash']) && isset($_COOKIE['id'])){
+	        if($this->model->resendEmail($_COOKIE)){
+                header('Location: login#');
+            }
+            else
+                View::errorCode(499);
+        }
+    }
 }
