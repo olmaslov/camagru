@@ -59,5 +59,10 @@ return [
 	'install' => [
 		'controller' => 'install',
 		'action' => 'install'
-	]
+	],
+
+    'change' => [
+        'controller' => 'account',
+        'action' => 'change'
+    ]
 ];

@@ -14,19 +14,19 @@ echo "" . $bing_daily_img_url;
 	<!--    <div class="filter-bg-image">-->
 	<!---->
 	<!--    </div>-->
-	<div class="test_abs">
-		<div id="modal-content2">
-			<div class="modal-2 login">
-				<div class="back"></div>
-				<div>
-					<div class="close"><i class="fas fa-times" onclick="closemodal2()"></i></div>
-					<?php
-					include_once './application/views/camera/enable.php';
+<!--	<div class="test_abs">-->
+<!--		<div id="modal-content2">-->
+<!--			<div class="modal-2 login">-->
+<!--				<div class="back"></div>-->
+<!--				<div>-->
+<!--					<div class="close"><i class="fas fa-times" onclick="closemodal2()"></i></div>-->
+				<?php
+					//include_once './application/views/camera/enable.php';
 					?>
-				</div>
-			</div>
-		</div>
-	</div>
+<!--				</div>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</div>-->
 <!--	<div id="modal-content">-->
 <!--			<div class="modal-2 register">-->
 <!--				<div class="back"></div>-->

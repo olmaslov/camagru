@@ -13,15 +13,18 @@ if ($args['std'] == 0){
 		\'passwd\' => $DB_PASSWORD
 	];';
 			file_put_contents('./config/database.php', $db_info);
-			$this->db->initdb();
-			$hash = $this->funk->generateCode();
-			$params = [
+    if(mkdir('./private'))
+        mkdir('./private/photo');
+    $this->db->initdb();
+    $hash = $this->funk->generateCode();
+    $params = [
 				'email' => $args['mail'],
 				'pass' => hash('md5', $args['apass']),
 				'login' => $args['login'],
 				'hash' => $hash
 			];
-			$this->db->query("INSERT INTO `users` 
+    $this->db->query("INSERT INTO `users` 
 (`email`, `password`, `login`, `role`, `hash`, `verified`) 
 VALUES (:email, :pass, :login, '1', :hash, '1')", $params);
+
 }

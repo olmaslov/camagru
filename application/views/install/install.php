@@ -20,7 +20,7 @@
                         <input type="text" id="loginAdm" name="" class="inp-log col-sm-10" value="" placeholder="Admin login">
                     </div>
 					<div class="row justify-content-center texts">
-                        <input type="pass" id="passAdm" name="" class="inp-log col-sm-10" value="" placeholder="Admin password">
+                        <input type="password" id="passAdm" name="" class="inp-log col-sm-10" value="" placeholder="Admin password">
                     </div>
                     <div class="row justify-content-center texts">
                         <input type="text" id="emailAdm" name="" class="inp-log col-sm-10" value=""
@@ -51,3 +51,4 @@
         </div>
     </div>
 </div>
+<script src="/camagru_mvc/public/js/install.js"></script>

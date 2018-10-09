@@ -2,7 +2,7 @@
 	$DB_DSN = 'localhost';
 	$DB_USER = 'root';
 	$DB_PASSWORD = '123456';
-	$DB_NAME = 'cam2';
+	$DB_NAME = 'camagru';
 
 	return [
 		'host' => $DB_DSN,

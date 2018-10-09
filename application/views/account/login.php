@@ -17,6 +17,7 @@
                     </div>
                 </div>
                 <div class="close"><i class="fas fa-times"></i></div>
+                <?php if ($log == '0'){?>
                 <h2 class="h2-login">Sign In</h2>
                 <div class="container">
                     <div class="row justify-content-center texts login-social">
@@ -49,6 +50,19 @@
                         <a href="./register" class="col-sm-12">Register</a>
                     </div>
                 </div>
+                <?php } else {?>
+                    <h2 class="h2-login">You already logged in</h2>
+                    <div class="container">
+                        <div class="row justify-content-center texts">
+                            <input type="button" name="" class="log-bnt inp-log col-sm-10" onclick="logOut()"
+                                   value="Logout">
+                        </div>
+                        <div class="row justify-content-center texts">
+                            <input type="button" name="" class="log-bnt inp-log col-sm-10" onClick="location.href='./'"
+                                   value="Go to gallery">
+                        </div>
+                    </div>
+                <?php }?>
             </div>
         </div>
     </div>

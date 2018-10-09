@@ -17,17 +17,18 @@ use PDO;
 class InstallController extends Controller {
 
 	public function installAction() {
-		if (!$this->model->test_db()) {
-			$this->view->render("install");
-			if (isset($_POST['install'])) {
-				if (!$this->model->install_db($_POST)) {
-					echo '1';
-				} else {
-					echo '0';
-				}
-			}
-		}
-		elseif (!isset($_POST['install']))
+		if (!$this->model->test_db() && !isset($_POST['install'])) {
+            $this->view->render("install");
+        }
+        if (isset($_POST['install'])) {
+            if (!$this->model->install_db($_POST)) {
+                echo '1';
+            } else {
+                echo '0';
+            }
+        }
+		elseif (!isset($_POST['install']) && $this->model->test_db())
 			header('Location: login');
+
 	}
 }

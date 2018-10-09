@@ -32,8 +32,8 @@ class Account extends Model
                 'hash' => $hash
             ];
             $this->db->query("INSERT INTO `users` 
-(`email`, `f_name`, `l_name`, `intra_id`, `token`, `rtoken`, `pic`, `role`, `hash`) 
-VALUES (:email, :first_name, :last_name, :id, :atoken, :rtoken,  :img, '2', :hash)",
+(`email`, `f_name`, `l_name`, `intra_id`, `token`, `rtoken`, `pic`, `role`, `hash`, `verified`) 
+VALUES (:email, :first_name, :last_name, :id, :atoken, :rtoken,  :img, '2', :hash, '1')",
                 $params);
             $query = $this->db->row("SELECT * from users WHERE email = '" . $info->email . "'");
             $jsonret['hash'] = $hash;
@@ -71,8 +71,8 @@ VALUES (:email, :first_name, :last_name, :id, :atoken, :rtoken,  :img, '2', :has
                 'hash' => $hash
             ];
             $this->db->query("INSERT INTO `users` 
-(`email`, `f_name`, `l_name`, `google_id`, `pic`, `role`, `hash`) 
-VALUES (:email, :first_name, :last_name, :id, :img, 2, :hash)",
+(`email`, `f_name`, `l_name`, `google_id`, `pic`, `role`, `hash`, `verified`) 
+VALUES (:email, :first_name, :last_name, :id, :img, 2, :hash, '1')",
                 $params);
             $query = $this->db->row("SELECT * from users WHERE email = '" . $info->email . "'");
             $jsonret['hash'] = $hash;
@@ -111,8 +111,8 @@ VALUES (:email, :first_name, :last_name, :id, :img, 2, :hash)",
                 'hash' => $hash
             ];
             $this->db->query("INSERT INTO `users` 
-(`email`, `f_name`, `l_name`, `fb_id`, `token`, `pic`, `role`, `hash`) 
-VALUES (:email, :first_name, :last_name, :id, :atoken, :img, '2', :hash)", $params);
+(`email`, `f_name`, `l_name`, `fb_id`, `token`, `pic`, `role`, `hash`, `verified`) 
+VALUES (:email, :first_name, :last_name, :id, :atoken, :img, '2', :hash, '1')", $params);
             $query = $this->db->row("SELECT * from users WHERE email = '" . $email->email . "'");
             $jsonret['hash'] = $hash;
             $jsonret['id'] = $query['id'];
@@ -193,6 +193,10 @@ VALUES (:email, :first_name, :last_name, :pass, :login, '2', :hash)", $params);
         }
     }
 
+    public function getUserInfo($args){
+        return $this->db->row("SELECT `login`,`f_name`,`l_name`,`email`,`fb_id`,`google_id`,`intra_id`,`pic` from users WHERE id = '" . $args['id'] . "' AND hash = '" .$args['hash']. "'");
+    }
+
     public function resendEmail($args){
         if(isset($args['hash']) && isset($args['id'])){
             $res = $this->db->row("SELECT * from users WHERE id = '" . $args['id'] . "' AND hash = '" .$args['hash']. "'");
@@ -202,6 +206,45 @@ VALUES (:email, :first_name, :last_name, :pass, :login, '2', :hash)", $params);
             }
             else
                 return 0;
+        }
+        else
+            return 0;
+    }
+
+    public function editAcc($args){
+        if (isset($args['nlogin'], $args['nname'], $args['nlname'], $args['hash'], $args['id'])){
+            $params = [
+                'login' => $args['nlogin'],
+                'fname' => $args['nname'],
+                'lname' => $args['nlname'],
+                'id' => $args['id'],
+                'hash' => $args['hash']
+            ];
+            $res = $this->db->row("SELECT * from users WHERE login = '" . $args['nlogin'] . "'");
+            if (!$res) {
+                if ($this->db->query("UPDATE `users` SET `login`= :login,`f_name`= :fname,`l_name`= :lname WHERE `id`= :id AND `hash`= :hash ;", $params)) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+            else
+                return 2;
+        }
+    }
+
+    public function editPass($args){
+        if (isset($args['npass'], $args['hash'], $args['id'])) {
+            $params = [
+                'pass' => hash('md5', $args['npass']),
+                'id' => $args['id'],
+                'hash' => $args['hash']
+            ];
+            if ($this->db->query("UPDATE `users` SET `password`= :pass WHERE `id`= :id AND `hash`= :hash ;", $params)) {
+                return 1;
+            } else {
+                return 0;
+            }
         }
         else
             return 0;

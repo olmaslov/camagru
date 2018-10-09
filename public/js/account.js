@@ -72,7 +72,7 @@ function fbLoginAJAX() {
                         var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
                         document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
                         document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
-						location.replace(location.hash.substr(1));
+                        location.replace((location.hash.substr(1) != '') ? location.hash.substr(1) : '/camagru_mvc');
                     } else {
                         console.log(this.status);
                     }
@@ -115,7 +115,7 @@ function glLoginAJAX() {
                         var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
                         document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
                         document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
-						location.replace(location.hash.substr(1));
+                        location.replace((location.hash.substr(1) != '') ? location.hash.substr(1) : '/camagru_mvc');
                     } else {
                         console.log(this.status);
                     }
@@ -182,7 +182,7 @@ function intraLoginAJAX() {
                                         var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
                                         document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
                                         document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
-										location.replace(location.hash.substr(1));
+                                        location.replace((location.hash.substr(1) != '') ? location.hash.substr(1) : '/camagru_mvc');
                                     }
                                 };
                                 xhr1.send('intra=' + this.responseText);
@@ -245,11 +245,11 @@ function registerSimple() {
                                 console.log(this.responseText);
                                 var json = JSON.parse(this.responseText);
                                 var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
-								document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
-								document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
-								// closemodal();
-								location.replace(location.hash.substr(1));
-							}
+                                document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
+                                document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
+                                // closemodal();
+                                location.replace((location.hash.substr(1) != '') ? location.hash.substr(1) : '/camagru_mvc');
+                            }
                         };
                         xhr1.send(data);
                     }
@@ -292,8 +292,8 @@ function simpleLogin() {
             if (this.status == 200) {
                 console.log(this.responseText);
                 var json = JSON.parse(this.responseText);
-                if (json.code != 1){
-                    if (json.code == 2){
+                if (json.code != 1) {
+                    if (json.code == 2) {
                         pass.style.color = "red";
                     }
                     else {
@@ -303,15 +303,90 @@ function simpleLogin() {
                 else {
                     // console.log();
                     var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
-					document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
-					document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
-					location.replace((location.hash.substr(1) != '') ? location.hash.substr(1) : '/camagru_mvc');
-				}
+                    document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
+                    document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
+                    location.replace((location.hash.substr(1) != '') ? location.hash.substr(1) : '/camagru_mvc');
+                }
             }
         };
         xhr1.send(data);
     }
     else {
 
+    }
+}
+
+function logOut() {
+    var date = new Date(new Date().getTime());
+    document.cookie = "hash=0; path=/; expires=" + date.toUTCString();
+    document.cookie = "id=NULL; path=/; expires=" + date.toUTCString();
+    location.replace((location.hash.substr(1) != '') ? location.hash.substr(1) : '/camagru_mvc');
+}
+
+function changeAccount() {
+    var login = document.querySelector('#login');
+    var fname = document.querySelector('#firstName');
+    var lname = document.querySelector('#lastName');
+    if (login.value != '' && fname.value != '' && lname.value != '') {
+        if (validateLogin(login.value)) {
+            if (validateName(fname.value) && validateName(lname.value)) {
+                var xhr1 = new XMLHttpRequest();
+                var data = "nlogin=" + login.value +
+                    "&nname=" + fname.value +
+                    "&nlname=" + lname.value;
+                xhr1.open("POST", '/camagru_mvc/change', true);
+                xhr1.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhr1.onreadystatechange = function () {
+                    if (this.readyState != 4) return;
+                    if (this.status == 200) {
+                        console.log(this.responseText);
+                        if (this.responseText == 1) {
+                            alert('Success!');
+                        }
+                        else if (this.responseText == 2) {
+                            alert('Login already in use!');
+                        }
+                        else
+                            alert('Deny!');
+                    }
+                };
+                xhr1.send(data);
+            }
+            else {
+                fname.style.color = "red";
+                lname.style.color = "red";
+            }
+        }
+    }
+    else {
+        login.style.color = "red";
+    }
+}
+
+function changePass() {
+    var pass = document.querySelector('#pass');
+    var cpass = document.querySelector('#passConirm');
+    if (pass.value != '' && cpass.value != '') {
+        if (pass.value == cpass.value) {
+            var xhr1 = new XMLHttpRequest();
+            var data = "npass=" + pass.value;
+            xhr1.open("POST", '/camagru_mvc/change', true);
+            xhr1.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr1.onreadystatechange = function () {
+                if (this.readyState != 4) return;
+                if (this.status == 200) {
+                    console.log(this.responseText);
+                    if (this.responseText == 1)
+                        alert('Success!');
+                    else
+                        alert('Deny!');
+                }
+            };
+            xhr1.send(data);
+        }
+        else {
+            pass.style.color = "red";
+            cpass.style.color = "red";
+        }
     }
 }

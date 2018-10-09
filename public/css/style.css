@@ -113,7 +113,7 @@ body {
   background: #2d8ba4;
   border-radius: 90px;
   color: #ffffff;
-  display: table-cell;
+  /*display: table-cell;*/
   font-size: calc(1rem * 5);
   font-weight: lighter;
   height: 130px;
@@ -121,6 +121,10 @@ body {
   overflow: hidden;
   vertical-align: middle;
   width: 130px;
+}
+
+.log-usr img{
+  max-width: 130px;
 }
 
 .wusr {

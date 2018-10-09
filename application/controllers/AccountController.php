@@ -39,7 +39,11 @@ class AccountController extends Controller {
             exit ($this->model->loginSimple($_POST));
         }
 
-        $this->view->render("login");
+        $params['log'] = 0;
+        if (isset($_COOKIE['hash']))
+            $params['log'] = 1;
+
+        $this->view->render("login", $params);
 
     }
 
@@ -64,7 +68,9 @@ class AccountController extends Controller {
     public function myAction(){
     	$res = json_decode($this->funk->checkAcc($_COOKIE));
     	if ($res->code == 0) {
-			$this->view->render("my");
+    	    $params = $this->model->getUserInfo($_COOKIE);
+//    	    debug($params);
+			$this->view->render("my", $params);
 		}
 		elseif ($res->code == 2) {
     	    View::errorCode(499);
@@ -97,6 +103,31 @@ class AccountController extends Controller {
             }
             else
                 View::errorCode(499);
+        }
+    }
+
+    public function changeAction(){
+        if (isset($_COOKIE['hash'], $_COOKIE['id'], $_POST['nlogin'], $_POST['nname'], $_POST['nlname'])) {
+            $args = array_merge($_COOKIE, $_POST);
+            $res = $this->model->editAcc($args);
+            if ($res == 1)
+                echo 1;
+            elseif ($res == 2)
+                echo 2;
+            else
+                echo 0;
+        }
+        elseif (isset($_COOKIE['hash'], $_COOKIE['id'], $_POST['npass'])){
+            $args = array_merge($_COOKIE, $_POST);
+            $res = $this->model->editPass($args);
+            if ($res == 1)
+                echo 1;
+            else
+                echo 0;
+        }
+        else{
+            View::errorCode(403);
+            echo 0;
         }
     }
 }
