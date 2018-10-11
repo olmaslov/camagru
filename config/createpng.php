@@ -1,5 +1,5 @@
 <?php
-$img="../private/photo/2.png";
+$img="../private/photo/1.png";
 
 $wm=imagecreatefrompng('../public/img/masks/unit-logo-white.png');
 
@@ -25,8 +25,17 @@ $cy=$size[1]-$wmH-10;
 
 imagecopyresampled($image, $wm, $cx, $cy, 0, 0, $wmW, $wmH, $wmW, $wmH);
 
-header('Content-Type: image/jpeg');
+//header('Content-Type: image/jpeg');
+
+ob_start();
+
 imagejpeg($image, NULL,100);
+
+$imagedata = ob_get_contents();
+ob_end_clean();
+
+print base64_encode($imagedata);
+//print '<p><img src="data:image/png;base64,'.base64_encode($imagedata).'" alt="image 1" width="96" height="48"/></p>';
 
 imagedestroy($image);
 

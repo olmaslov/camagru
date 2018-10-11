@@ -421,15 +421,17 @@ textarea {
 /*admin panel*/
 
 .left-admin {
+  overflow: auto;
   height: 100%;
   border-radius: 10px 0 0 10px;
-  background: black;
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .right-admin {
+  overflow: auto;
   border-radius: 0 10px 10px 0;
   height: 100%;
-  background: blue;
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .admin-inner {
@@ -582,6 +584,15 @@ textarea {
     height: 5px;
     width: 18px;
   }
+}
+
+.thumbnail img {
+  -webkit-user-drag: none;
+  user-select: none;
+  height: auto;
+  width: 100%;
+  padding: 5px;
+  border-radius: 10px;
 }
 
 /*@-o-keyframes cssload-loading {*/

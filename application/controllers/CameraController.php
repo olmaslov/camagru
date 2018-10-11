@@ -17,6 +17,14 @@ class CameraController extends Controller {
 	}
 
 	public function cameraAction() {
-	    $this->view->render('camera');
+	    $res = $this->model->get_user_photos($_COOKIE);
+//	    debug($res);
+	    $this->view->render('camera', $res);
+    }
+
+    public function maskAction(){
+	    if (isset($_POST['mask'], $_POST['data'])){
+	        $this->model->add_mask($_POST);
+        }
     }
 }

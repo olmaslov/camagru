@@ -34,9 +34,15 @@
                                 <p id="error-message"></p>
 
                                 <div class="controls">
-                                    <button id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></button>
-                                    <button id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></button>
-                                    <button id="upload-photo" class="visible"><i class="material-icons">file_upload</i></button>
+                                    <button id="delete-photo" title="Delete Photo" class="disabled"><i
+                                                class="material-icons">delete</i></button>
+                                    <button id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i>
+                                    </button>
+                                    <button id="upload-photo" class="visible"><i class="material-icons">file_upload</i>
+                                    </button>
+                                    <!--                                    <button id="filter-photo" class="hide"><i class="material-icons">filter</i></button>-->
+                                    <button id="erase-filter" class="hide disabled visible"><i class="material-icons">filter_none</i>
+                                    </button>
                                     <!--            <a href="#" id="download-photo" download="img.png" title="Save Photo" class="visible"><i class="material-icons">file_download</i></a>-->
                                 </div>
 
@@ -48,8 +54,19 @@
                             </div>
 
                         </div>
+                        <div class="row justify-content-center masks-gallery ">
+                            <div class="disabled" id="mg">
+                                <img class="masks" src="public/img/masks/42_Logo.png" alt="42_Logo">
+                                <img class="masks" src="public/img/masks/logoUNIT.png" alt="logoUNIT">
+                                <img class="masks" src="public/img/masks/unit-city-logo-white.png"
+                                     alt="unit-city-logo-white">
+                                <img class="masks" src="public/img/masks/unit-logo-white.png" alt="unit-logo-white">
+                                <img class="masks" src="public/img/masks/unit-logo-white-vertical.png"
+                                     alt="unit-logo-white-vertical">
+                            </div>
+                        </div>
                         <div class="row">
-                            <div class="filter-gallery" id="fg">
+                            <div class="filter-gallery disabled" id="fg">
                                 <img class="filters" src="public/img/filterSamples/1977.png" alt="_1977"/>
                                 <img class="filters" src="public/img/filterSamples/aden.png" alt="aden"/>
                                 <img class="filters" src="public/img/filterSamples/brannan.png" alt="brannan"/>
@@ -73,14 +90,50 @@
 
                         <div class="row">
                             <div class="col-10 textcomm">
-                                <textarea id="descr"></textarea>
+                                <textarea id="descr" placeholder="Put your comment here"></textarea>
                             </div>
-                            <div class="col-2 pcom" id="svpic">
-                                <i class="material-icons sendcomm">send</i>
+                            <div class="col-2 pcom">
+                                <i class="material-icons sendcomm disabled" id="svpic">send</i>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 right-admin"></div>
+                    <div class="col-sm-3 right-admin" id="thumbnails">
+                        <?php
+//                        debug(get_defined_vars());
+                        foreach ($vars as $val) {
+                            echo "<div class=\"row\" >
+                                    <div class=\"thumbnail\" id=\"thumb".$val['id']."\" onclick=\"thumbClick(".$val['id'].")\" >
+                                        <img src = \"private/photo/".$val['id'].".png\" >
+                                        <div class=\"sel\"><i class=\"material-icons\">check_circle</i></div>
+                                    </div >
+                                    
+                                  </div >";
+                        }
+                        ?>
+                        <!--                        <div class="row">-->
+                        <!--                            <div class="thumbnail">-->
+                        <!--                                <img src="private/photo/1.png">-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <!--                        <div class="row">-->
+                        <!--                            <div class="thumbnail">-->
+                        <!--                                <img src="private/photo/1.png">-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <!--                        <div class="row">-->
+                        <!--                            <div class="thumbnail">-->
+                        <!--                                <img src="private/photo/1.png">-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <!--                        <div class="row">-->
+                        <!--                            <div class="thumbnail">-->
+                        <!--                                <img src="private/photo/1.png">-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                    </div>
+                    <div class="row">
+                        <button onclick="delPosts()">Delete</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -88,16 +141,16 @@
 </div>
 
 
-
 <script src="/camagru_mvc/public/js/test.js"></script>
 <script>
-    (function() {
+    (function () {
         function scrollHorizontally(e) {
             e = window.event || e;
             var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-            document.getElementById('fg').scrollLeft -= (delta*40); // Multiplied by 40
+            document.getElementById('fg').scrollLeft -= (delta * 40); // Multiplied by 40
             e.preventDefault();
         }
+
         if (document.getElementById('fg').addEventListener) {
             // IE9, Chrome, Safari, Opera
             document.getElementById('fg').addEventListener("mousewheel", scrollHorizontally, false);
@@ -117,10 +170,26 @@
         padding: 0;
     }
 
-    .filter-gallery{
-        height:10%;
-        width:100%;
-        overflow-x:scroll;
+    .thumbnail {
+        position: relative;
+    }
+
+    .sel {
+        opacity: 0;
+        position: absolute;
+        color: #2d8ba4;
+        bottom: 0px;
+        right: 5px;
+    }
+
+    .selected .sel {
+        opacity: 1;
+    }
+
+    .filter-gallery {
+        height: 10%;
+        width: 100%;
+        overflow-x: scroll;
         white-space: nowrap;
     }
 
@@ -131,31 +200,31 @@
         height: auto;
     }
 
-    *{
+    * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
     }
 
-    html{
+    html {
         background-color: #fff;
-        font:normal 16px/1.5 sans-serif;
+        font: normal 16px/1.5 sans-serif;
         color: #333;
     }
 
-    h3{
+    h3 {
         font: normal 32px/1.5 'Open Sans', sans-serif;
         color: #2c3e50;
         margin: 50px 0;
         text-align: center;
     }
 
-    .app{
+    .app {
         width: 100%;
         position: relative;
     }
 
-    .app #start-camera{
+    .app #start-camera {
         display: none;
         border-radius: 3px;
         max-width: 400px;
@@ -168,12 +237,12 @@
         text-align: center;
     }
 
-    .app #camera-stream{
+    .app #camera-stream {
         display: none;
         width: 100%;
     }
 
-    .app img#snap{
+    .app img#snap {
         /*position: absolute;*/
         top: 0;
         left: 0;
@@ -182,7 +251,7 @@
         display: none;
     }
 
-    .app #error-message{
+    .app #error-message {
         width: 100%;
         background-color: #ccc;
         color: #9b9b9b;
@@ -192,7 +261,7 @@
         display: none;
     }
 
-    .app .controls{
+    .app .controls {
         position: absolute;
         top: 0;
         left: 0;
@@ -207,7 +276,7 @@
         display: none;
     }
 
-    .app .controls button{
+    .app .controls button {
         cursor: pointer;
         border: none;
         border-radius: 50%;
@@ -221,78 +290,102 @@
         -webkit-tap-highlight-color: transparent;
     }
 
-    .app .controls button:hover{
+    .app .controls button:hover {
         opacity: 1;
     }
 
-    .app .controls button.disabled{
+    .app .controls button.disabled {
         background-color: #555;
         opacity: 0.5;
         cursor: default;
         pointer-events: none;
     }
 
-    .app .controls button.disabled:hover{
+    .app .controls button.disabled:hover {
         opacity: 0.5;
     }
 
-    .app .controls button i{
+    .row .disabled {
+        background-color: #555;
+        opacity: 0.5;
+        cursor: default;
+        pointer-events: none;
+    }
+
+    .app .controls button i {
         font-size: 18px;
     }
 
-    .app .controls #take-photo i{
+    .app .controls #take-photo i {
         font-size: 32px;
     }
 
-    .app canvas{
+    .app canvas {
         display: none;
     }
 
-
-
     .app #camera-stream.visible,
     .app img#snap.visible,
-    .app #error-message.visible
-    {
+    .app #error-message.visible {
         display: block;
     }
 
-    .app .controls.visible{
+    .app .controls.visible {
         display: flex;
     }
 
+    @media (max-width: 1000px) {
 
-
-    @media(max-width: 1000px){
-
-        .app #start-camera.visible{
+        .app #start-camera.visible {
             display: block;
         }
 
-        .app .controls a i{
+        .app .controls a i {
             font-size: 16px;
         }
 
-        .app .controls #take-photo i{
+        .app .controls #take-photo i {
             font-size: 24px;
         }
     }
 
-
-    @media(max-width: 600px){
-        .app #error-message{
+    @media (max-width: 600px) {
+        .app #error-message {
             padding: 80px 50px;
             font-size: 18px;
         }
 
-        .app .controls button i{
+        .app .controls button i {
             font-size: 12px;
         }
 
-        .app .controls #take-photo i{
+        .app .controls #take-photo i {
             font-size: 18px;
         }
     }
 
+    #svpic {
+        cursor: pointer;
+    }
+
+    .masks-gallery {
+        height: 10%;
+        white-space: nowrap;
+    }
+
+    .masks-gallery img {
+        max-width: 25%;
+        padding: 15px;
+        max-height: 100%;
+    }
+
+    .disabled {
+        -webkit-user-drag: none;
+        user-select: none;
+    }
+
+    .selected {
+
+    }
 
 </style>

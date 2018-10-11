@@ -573,4 +573,15 @@ Sizes: [
         mail($res['email'], 'Plaese verify your account', $message, $headers);
         }
     }
+
+    public function validateUser($args) {
+	    if (isset($args['hash'], $args['id'])) {
+            $res = $this->db->row("SELECT * from users WHERE id = '" . $args['id'] . "' AND hash = '" . $args['hash'] . "'");
+            if ($res)
+                return 1;
+            else
+                return 0;
+        }
+        return 0;
+    }
 }

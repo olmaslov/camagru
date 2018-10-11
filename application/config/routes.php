@@ -64,5 +64,10 @@ return [
     'change' => [
         'controller' => 'account',
         'action' => 'change'
+    ],
+
+    'mask' => [
+        'controller' => 'camera',
+        'action' => 'mask'
     ]
 ];
