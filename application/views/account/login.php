@@ -44,7 +44,7 @@
                             <input type="checkbox" class="custom-control-input" checked id="customControlAutosizing">
                             <label class="custom-control-label" for="customControlAutosizing">Remember me</label>
                         </div>
-                        <a href="#" class="col-sm-4">Forgot password?</a>
+                        <a href="./forgot" class="col-sm-4">Forgot password?</a>
                     </div>
                     <div class="row justify-content-center texts checks">
                         <a href="./register" class="col-sm-12">Register</a>

@@ -61,7 +61,7 @@ body {
   /*height: 34rem;*/
   left: calc(50% - 15rem);
   max-width: 30rem;
-  top: calc(50% - 16.5rem);
+  top: 10%;
   padding: 50px;
   width: 100%;
   z-index: 700;
@@ -155,6 +155,13 @@ body {
   background-color: #2d8ba4;
   color: #fff;
   font-size: 21pt;
+}
+
+.adm-bnt {
+  background-color: #2d8ba4;
+  color: #fff;
+  font-size: 12pt;
+  height: auto;
 }
 
 .log-chck {

@@ -52,6 +52,7 @@ class Db {
                       pic VARCHAR(600),
                       role INT(5) NOT NULL,
                       verified TINYINT(1),
+                      receive TINYINT(1) DEFAULT 1,
                       reg_date TIMESTAMP
                       );
                       CREATE TABLE posts (
@@ -59,6 +60,7 @@ class Db {
                       uid int(6),
                       type TINYINT(1),
                       descr VARCHAR(30),
+                      deleted TINYINT(1) NULL,
                       creation_date TIMESTAMP
                       );
                       CREATE TABLE comments (

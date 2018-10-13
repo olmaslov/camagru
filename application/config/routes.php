@@ -69,5 +69,30 @@ return [
     'mask' => [
         'controller' => 'camera',
         'action' => 'mask'
-    ]
+    ],
+
+	'delpost' => [
+		'controller' => 'savetodb',
+		'action' => 'del'
+	],
+
+	'getadm' => [
+		'controller' => 'account',
+		'action' => 'adm'
+	],
+
+	'delusr' => [
+		'controller' => 'account',
+		'action' => 'del'
+	],
+
+	'forgot' => [
+		'controller' => 'account',
+		'action' => 'forgot'
+	],
+
+	'newpass' => [
+		'controller' => 'account',
+		'action' => 'newpass'
+	]
 ];

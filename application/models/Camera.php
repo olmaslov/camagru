@@ -54,7 +54,7 @@ class Camera extends Model {
 
     public function get_user_photos($args) {
   	    if ($this->funk->validateUser($args)){
-  	        $res = $this->db->all("SELECT id from posts WHERE uid = '" . $args['id'] . "' ORDER BY id DESC");
+  	        $res = $this->db->all("SELECT id from posts WHERE uid = '" . $args['id'] . "' AND deleted IS NULL ORDER BY id DESC");
             return $res;
         }
         else

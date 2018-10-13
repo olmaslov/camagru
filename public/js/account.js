@@ -279,6 +279,7 @@ function registerSimple() {
 function simpleLogin() {
     var login = document.querySelector('#logLogin');
     var pass = document.querySelector('#logPass');
+    var remember = document.querySelector('#customControlAutosizing');
     if (login.value != '' && pass.value != '') {
         // console.log(login.value);
         // console.log(pass.value);
@@ -303,8 +304,15 @@ function simpleLogin() {
                 else {
                     // console.log();
                     var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
-                    document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
-                    document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
+                    if (remember.checked) {
+						document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
+						document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
+					}
+					else {
+						document.cookie = "hash=" + json.hash + "; path=/;";
+						document.cookie = "id=" + json.id + "; path=/;";
+					}
+
                     location.replace((location.hash.substr(1) != '') ? location.hash.substr(1) : '/camagru_mvc');
                 }
             }
@@ -327,13 +335,19 @@ function changeAccount() {
     var login = document.querySelector('#login');
     var fname = document.querySelector('#firstName');
     var lname = document.querySelector('#lastName');
+    var receive;
+    if (document.querySelector('#receiveViaEmail').checked)
+        receive = 1;
+    else
+        receive = 0;
     if (login.value != '' && fname.value != '' && lname.value != '') {
         if (validateLogin(login.value)) {
             if (validateName(fname.value) && validateName(lname.value)) {
                 var xhr1 = new XMLHttpRequest();
                 var data = "nlogin=" + login.value +
                     "&nname=" + fname.value +
-                    "&nlname=" + lname.value;
+                    "&nlname=" + lname.value +
+                    "&receive=" + receive;
                 xhr1.open("POST", '/camagru_mvc/change', true);
                 xhr1.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 xhr1.onreadystatechange = function () {
@@ -389,4 +403,27 @@ function changePass() {
             cpass.style.color = "red";
         }
     }
+}
+
+function renewPass() {
+	var login = document.querySelector('#login');
+	if (login.value != '') {
+		var xhr1 = new XMLHttpRequest();
+		var data = "login=" + login.value;
+		xhr1.open("POST", '/camagru_mvc/forgot', true);
+		xhr1.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		xhr1.onreadystatechange = function () {
+			if (this.readyState != 4) return;
+			if (this.status == 200) {
+				console.log(this.responseText);
+				if (this.responseText == 1)
+					alert('Success!');
+				else
+					alert('Deny!');
+			}
+		};
+		xhr1.send(data);
+	}
+	else
+		login.style.color = 'red';
 }

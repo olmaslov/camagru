@@ -38,8 +38,7 @@ class SavetodbController extends Controller {
                     ];
                     $name = $this->model->save_post($params);
                     $decodedData = base64_decode($data);
-                    file_put_contents('private/photo/' . $name . '.png', $decodedData);
-
+                    file_put_contents('./private/photo/' . $name . '.png', $decodedData);
                 }
                 print_r($name);
             }
@@ -47,4 +46,19 @@ class SavetodbController extends Controller {
         else
             View::errorCode(403);
     }
+
+    public function delAction() {
+    	if ($this->funk->validateUser($_COOKIE)) {
+    		if (isset($_POST['delete'], $_POST['id'])){
+    			if ($this->model->del_post($_POST))
+    				echo '1';
+    			else
+    				echo '0';
+			}
+			else
+				View::errorCode(403);
+		}
+		else
+			View::errorCode(403);
+	}
 }

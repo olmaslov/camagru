@@ -420,7 +420,7 @@ savepic.addEventListener("click", function (e) {
             if (this.status == 200) {
                 var newphoto = document.createElement("div");
                 newphoto.classList.add("row");
-                newphoto.innerHTML = "<div class=\"thumbnail\"><img src=\""+ img + "\" ><div class=\"sel\"><i class=\"material-icons\">check_circle</i></div></div >";
+                newphoto.innerHTML = "<div class=\"thumbnail\" id=\"thumb" + this.responseText + "\" onclick=\"thumbClick(" + this.responseText + ")\"><img src=\""+ img + "\" ><div class=\"sel\"><i class=\"material-icons\">check_circle</i></div></div >";
                 thumbnails.insertBefore(newphoto, thumbnails.firstChild);
                 img = null;
                 var event = new Event("click");
@@ -445,6 +445,22 @@ function thumbClick(id) {
 
 function delPosts() {
     document.querySelectorAll('.selected').forEach(function (e) {
-        console.log(e.id);
+		var fd = new FormData();
+		fd.append('delete', 'pic');
+		fd.append('id', e.id.replace('thumb', ''));
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", '/camagru_mvc/delpost', true);
+		xhr.onreadystatechange = function () {
+			if (this.readyState != 4) return;
+			if (this.status == 200) {
+			    if (this.responseText == 1) {
+					e.classList.add("hide");
+					e.classList.remove("selected");
+				}
+				else
+				    alert('Error delete post');
+			}
+		};
+		xhr.send(fd);
     });
 }
