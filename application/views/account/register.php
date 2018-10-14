@@ -16,7 +16,6 @@
                         <i class="far fa-user"></i>
                     </div>
                 </div>
-                <div class="close"><i class="fas fa-times"></i></div>
                 <h2 class="h2-login">Sign up</h2>
                 <div class="container">
                     <div class="row justify-content-center texts">

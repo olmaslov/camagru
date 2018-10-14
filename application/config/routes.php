@@ -94,5 +94,10 @@ return [
 	'newpass' => [
 		'controller' => 'account',
 		'action' => 'newpass'
-	]
+	],
+
+    'addcom' => [
+        'controller' => 'post',
+        'action' => 'comment'
+    ]
 ];

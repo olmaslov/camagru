@@ -93,11 +93,23 @@ class AccountController extends Controller {
 	}
 
 	public function resendAction() {
-		if (isset($_COOKIE['hash']) && isset($_COOKIE['id'])) {
-			if ($this->model->resendEmail($_COOKIE)) {
-				header('Location: login#');
-			} else
-				View::errorCode(499);
+		if (isset($_COOKIE['hash'], $_COOKIE['id']))
+		{
+		    $code = json_decode($this->funk->checkAcc($_COOKIE));
+		    if ($code->code == 2) {
+                if (isset($_GET['res'])){
+                    if ($_GET['res'] == 'true') {
+                        if ($this->model->resendEmail($_COOKIE))
+                            header('Location: login#');
+                    }
+                }
+                else {
+                    $this->view->render("resend email");
+                }
+            }
+            else {
+                header('Location: login#');
+            }
 		}
 	}
 

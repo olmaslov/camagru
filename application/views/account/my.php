@@ -29,15 +29,6 @@
 				</div>
 				<h2 class="h2-login">Your account</h2>
 				<div class="container">
-					<!--                    <div class="row justify-content-center texts login-social">-->
-					<!--                        <p class="col-sm-4 social-login" onclick="fbLoginAJAX()"><i class="fab fa-facebook-square"></i>-->
-					<!--                        </p>-->
-					<!--                        <p class="col-sm-4 social-login" onclick="glLoginAJAX()"><i-->
-					<!--                                    class="fab fa-google-plus-square"></i></p>-->
-					<!--                        <p class="col-sm-4 social-login" onclick="intraLoginAJAX()"><img class="icon_42"-->
-					<!--                                                                                         src="/camagru_mvc/public/img/42_icon.png">-->
-					<!--                        </p>-->
-					<!--                    </div>-->
 					<div class="row justify-content-center texts">
 						<input type="text" id="login" name="" class="inp-log col-sm-10"
 							   value="<?php if ($login) echo $login; ?>"

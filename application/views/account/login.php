@@ -16,7 +16,6 @@
                         <i class="far fa-user"></i>
                     </div>
                 </div>
-                <div class="close"><i class="fas fa-times"></i></div>
                 <?php if ($log == '0'){?>
                 <h2 class="h2-login">Sign In</h2>
                 <div class="container">

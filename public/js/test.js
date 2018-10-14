@@ -76,6 +76,7 @@ var video = document.querySelector('#camera-stream'),
     masks = document.querySelectorAll(".masks"),
     tmpimg = document.querySelector('#tmpimg'),
     savepic = document.querySelector('#svpic'),
+    del_photos = document.querySelector('#del_photos'),
     thumbnails = document.querySelector('#thumbnails'),
     flag = 0,
     limg,
@@ -367,6 +368,7 @@ delete_btn.addEventListener("click", function (e) {
 
 
     delete_btn.classList.add("disabled");
+    savepic.classList.add("disabled");
     record.classList.remove("disabled");
     filtersg.classList.add("disabled");
     masksg.classList.add("disabled");
@@ -401,8 +403,6 @@ savepic.addEventListener("click", function (e) {
                 if (this.readyState != 4) return;
                 if (this.status == 200) {
                     vid = null;
-                } else {
-                    // console.log(this.status);
                 }
             };
             xhr.send(fd);
@@ -418,6 +418,7 @@ savepic.addEventListener("click", function (e) {
         xhr.onreadystatechange = function () {
             if (this.readyState != 4) return;
             if (this.status == 200) {
+                savepic.classList.add("disabled");
                 var newphoto = document.createElement("div");
                 newphoto.classList.add("row");
                 newphoto.innerHTML = "<div class=\"thumbnail\" id=\"thumb" + this.responseText + "\" onclick=\"thumbClick(" + this.responseText + ")\"><img src=\""+ img + "\" ><div class=\"sel\"><i class=\"material-icons\">check_circle</i></div></div >";
@@ -439,8 +440,10 @@ function thumbClick(id) {
     var thumb = document.querySelector('#thumb' + id);
     if (thumb.classList.contains("selected"))
         thumb.classList.remove("selected");
-    else
+    else {
         thumb.classList.add("selected");
+        del_photos.classList.remove('disabled');
+    }
 }
 
 function delPosts() {
@@ -456,6 +459,7 @@ function delPosts() {
 			    if (this.responseText == 1) {
 					e.classList.add("hide");
 					e.classList.remove("selected");
+					del_photos.classList.add("disabled");
 				}
 				else
 				    alert('Error delete post');

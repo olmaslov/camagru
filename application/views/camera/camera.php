@@ -54,6 +54,9 @@
                             </div>
 
                         </div>
+                        <div class="row">
+                            <p class="text-center col-sm-12">Masks</p>
+                        </div>
                         <div class="row justify-content-center masks-gallery ">
                             <div class="disabled" id="mg">
                                 <img class="masks" src="public/img/masks/42_Logo.png" alt="42_Logo">
@@ -64,6 +67,9 @@
                                 <img class="masks" src="public/img/masks/unit-logo-white-vertical.png"
                                      alt="unit-logo-white-vertical">
                             </div>
+                        </div>
+                        <div class="row">
+                            <p class="text-center col-sm-12">Filters:</p>
                         </div>
                         <div class="row">
                             <div class="filter-gallery disabled" id="fg">
@@ -97,42 +103,24 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 right-admin" id="thumbnails">
-                        <?php
-//                        debug(get_defined_vars());
-                        foreach ($vars as $val) {
-                            echo "<div class=\"row\" >
-                                    <div class=\"thumbnail\" id=\"thumb".$val['id']."\" onclick=\"thumbClick(".$val['id'].")\" >
-                                        <img src = \"private/photo/".$val['id'].".png\" >
+                    <div class="right-admin col-sm-3">
+                        <div class="col-sm-12 photos" id="thumbnails">
+                            <?php
+                            foreach ($vars as $val) {
+                                echo "<div class=\"row\" >
+                                    <div class=\"thumbnail\" id=\"thumb" . $val['id'] . "\" onclick=\"thumbClick(" . $val['id'] . ")\" >
+                                        <img src = \"private/photo/" . $val['id'] . ".png\" >
                                         <div class=\"sel\"><i class=\"material-icons\">check_circle</i></div>
                                     </div >
                                     
                                   </div >";
-                        }
-                        ?>
-                        <!--                        <div class="row">-->
-                        <!--                            <div class="thumbnail">-->
-                        <!--                                <img src="private/photo/1.png">-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
-                        <!--                        <div class="row">-->
-                        <!--                            <div class="thumbnail">-->
-                        <!--                                <img src="private/photo/1.png">-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
-                        <!--                        <div class="row">-->
-                        <!--                            <div class="thumbnail">-->
-                        <!--                                <img src="private/photo/1.png">-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
-                        <!--                        <div class="row">-->
-                        <!--                            <div class="thumbnail">-->
-                        <!--                                <img src="private/photo/1.png">-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
-                    </div>
-                    <div class="row">
-                        <button onclick="delPosts()">Delete</button>
+                            }
+                            ?>
+                        </div>
+                        <div class="row bottom-btn">
+                            <input type="button" name="" id="del_photos" class="log-bnt inp-log col-sm-12 disabled" onclick="delPosts()"
+                                   value="Delete">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -165,6 +153,19 @@
 <style>
     /*@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');*/
     /*@import url('https://fonts.googleapis.com/icon?family=Material+Icons+Rounded');*/
+
+    .photos {
+        height: 93%;
+        overflow: auto;
+    }
+
+    .bottom-btn {
+        padding-right: 15px;
+        padding-left: 15px;
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+    }
 
     .textcomm {
         padding: 0;
@@ -310,6 +311,11 @@
         opacity: 0.5;
         cursor: default;
         pointer-events: none;
+        color: #5F5F5F;
+    }
+
+    #svpic {
+        background: none;
     }
 
     .app .controls button i {
