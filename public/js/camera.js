@@ -72,7 +72,6 @@ var isFirefox = typeof InstallTrigger !== 'undefined';
 var isChrome = !!window.chrome && !!window.chrome.webstore;
 
 if (navigator.getUserMedia) {
-	console.log('getUserMedia supported.');
 
 	if (isChrome) {
 		var constraints = {
@@ -108,18 +107,13 @@ if (navigator.getUserMedia) {
 				record.innerHTML = '<i class="material-icons">videocam</i>';
 			}, 2000);
 			mediaRecorder.start();
-			console.log(mediaRecorder.state);
-			console.log("recorder started");
 			// record.style.background = "red";
 			record.style.color = "black";
 		}
 
 		record.onmouseup = function () {
 			if (timer == true) {
-				console.log('true');
 				mediaRecorder.stop();
-				console.log(mediaRecorder.state);
-				console.log("recorder stopped");
 				record.style.background = "";
 				record.style.color = "";
 
@@ -129,7 +123,6 @@ if (navigator.getUserMedia) {
 				var videoURL = window.URL.createObjectURL(blob);
 
 				downloadLink.href = videoURL;
-				console.log(videoURL);
 
 				var rand = Math.floor((Math.random() * 10000000));
 				var name = "video_" + rand + ".mp4";
@@ -137,7 +130,6 @@ if (navigator.getUserMedia) {
 				downloadLink.setAttribute("download", name);
 				downloadLink.setAttribute("name", name);
 			} else {
-				console.log('false');
 				mediaRecorder.stop();
 				var snap = takeSnapshot();
 
@@ -167,12 +159,10 @@ if (navigator.getUserMedia) {
 	}
 
 	var onError = function (err) {
-		console.log('The following error occured: ' + err);
 	}
 
 	navigator.getUserMedia(constraints, onSuccess, onError);
 } else {
-	console.log('getUserMedia not supported on your browser!');
 }
 
 function visualize(mediaStream) {
@@ -195,7 +185,6 @@ function takeSnapshot() {
 	var width = video.videoWidth,
 		height = video.videoHeight;
 
-	console.log(video);
 
 	if (width && height) {
 

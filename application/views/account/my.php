@@ -13,7 +13,7 @@
 				<div class="wusr">
 					<div class="log-usr">
 						<?php if (!$pic) {
-							echo "<i class=\"material-icons\">add_a_photo</i>";
+							echo "<i class=\"far fa-user\"></i>";
 						} else {
 							echo "<img src=\"" . $pic . "\">";
 						} ?>

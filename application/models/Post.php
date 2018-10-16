@@ -16,6 +16,11 @@ class Post extends Model {
         foreach ($result as $key => $value){
             $result[$key]['user'] = $this->db->row("SELECT f_name, login FROM users WHERE id = '".$value['uid']."'");
             $result[$key]['comment'] = $this->db->all("SELECT * FROM comments WHERE pid = '".$value['id']."' ORDER BY creation_date DESC");
+            $result[$key]['like'] = false;
+            $result[$key]['likecount'] = $this->db->row("SELECT count(*) as total from likes WHERE pid = '".$value['id']."'");
+            if ($this->db->row("SELECT * FROM likes WHERE pid = '".$value['id']."' AND uid = '".$_COOKIE['id']."' ORDER BY creation_date DESC")){
+                $result[$key]['like'] = true;
+            }
             foreach ($result[$key]['comment'] as $key1 => $val){
                 $result[$key]['comment'][$key1]['user'] = $this->db->row("SELECT f_name, login FROM users WHERE id = '".$val['uid']."'");
             }
@@ -33,7 +38,7 @@ class Post extends Model {
             $res = $this->db->row("SELECT * from posts WHERE id = '" . $_POST['id'] . "'");
             $res1 = $this->db->row("SELECT * from users WHERE id = '" . $res['uid'] . "'");
             if ($res1['receive'] == 1) {
-                mail($res1['email'], 'Comment', "You have new comment on your post");
+                mail($res1['email'], 'New comment', "You have new comment on your post");
             }
             return 1;
         }
@@ -50,7 +55,7 @@ class Post extends Model {
             $res = $this->db->row("SELECT * from posts WHERE id = '" . $_POST['id'] . "'");
             $res1 = $this->db->row("SELECT * from users WHERE id = '" . $res['uid'] . "'");
             if ($res1['receive'] == 1) {
-                mail($res1['email'], 'Comment', "You have new like on your post");
+                mail($res1['email'], 'New like', "You have new like on your post");
             }
             return 1;
         }

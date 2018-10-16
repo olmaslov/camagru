@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<title><?php echo $title; ?></title>
+<title><?php echo $title;?></title>
 <head>
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="./public/img/camagru_logo2alt.png"/>
@@ -28,6 +28,8 @@ $bing_daily_img_url = "https://s.cn.bing.com" . $matches[1] . "_1920x1080.jpg";
 echo "" . $bing_daily_img_url;
 ?>);"></div>
 <!--header-->
+<?php
+if ($vars['header'] == true){?>
 <div class="header">
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
         <a class="navbar-brand" href="./"><img src="./public/img/camagru_logo2alt.png" width="60" alt="logo"></a>
@@ -59,6 +61,7 @@ echo "" . $bing_daily_img_url;
     </nav>
 </div>
 <!--end header-->
-<?php echo $content; ?>
+<?php }
+echo $content; ?>
 </body>
 </html>

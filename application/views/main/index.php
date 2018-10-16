@@ -48,7 +48,8 @@
                     echo "<i class=\"material-icons\" id=\"likePost".$val['id']."\" >favorite</i>";
                 else
                     echo "<i class=\"material-icons like\" id=\"likePost".$val['id']."\" onclick=\"likePost(".$val['id'].")\">favorite_border</i>";
-                echo "</div>
+                echo "
+                    <p class='countlike'>".$val['likecount']['total']."</p></div>
                     <div class=\"row\">
                         <div class=\"col-10 textcomm\">
                             <textarea name=\"name\" id='text".$val['id']."'></textarea>
@@ -103,7 +104,8 @@
                     echo "<i class=\"material-icons\" id=\"likePost".$val['id']."\" >favorite</i>";
                 else
                     echo "<i class=\"material-icons like\" id=\"likePost".$val['id']."\" onclick=\"likePost(".$val['id'].")\">favorite_border</i>";
-                echo "</div>	
+                echo "
+                <p class='countlike'>".$val['likecount']['total']."</p></div>	
     					<div class=\"row\">
     						<div class=\"col-10 textcomm\">
     							<textarea name=\"name\" id='text".$val['id']."'></textarea>

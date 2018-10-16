@@ -65,14 +65,11 @@ function fbLoginAJAX() {
                 xhr.onreadystatechange = function () {
                     if (this.readyState != 4) return;
                     if (this.status == 200) {
-                        console.log(this.responseText);
                         var json = JSON.parse(this.responseText);
                         var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
                         document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
                         document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
                         location.replace((location.hash.substr(1) != '') ? location.hash.substr(1) : '/camagru_mvc');
-                    } else {
-                        console.log(this.status);
                     }
                 };
                 xhr.send('fb=log&' + arr[1]);
@@ -113,9 +110,8 @@ function glLoginAJAX() {
                         document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
                         document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
                         location.replace((location.hash.substr(1) != '') ? location.hash.substr(1) : '/camagru_mvc');
-                    } else {
-                        console.log(this.status);
                     }
+
                 };
                 xhr.send('google=' + arr[1].replace('id_token=', ''));
             }
@@ -182,8 +178,6 @@ function intraLoginAJAX() {
                                     }
                                 };
                                 xhr1.send('intra=' + this.responseText);
-                            } else {
-                                console.log(this.status);
                             }
                         };
                         xhr.send(req);
@@ -284,7 +278,6 @@ function simpleLogin() {
         xhr1.onreadystatechange = function () {
             if (this.readyState != 4) return;
             if (this.status == 200) {
-                console.log(this.responseText);
                 var json = JSON.parse(this.responseText);
                 if (json.code != 1) {
                     if (json.code == 2) {
@@ -345,7 +338,6 @@ function changeAccount() {
                 xhr1.onreadystatechange = function () {
                     if (this.readyState != 4) return;
                     if (this.status == 200) {
-                        console.log(this.responseText);
                         if (this.responseText == 1) {
                             alert('Success!');
                         }
@@ -381,7 +373,6 @@ function changePass() {
             xhr1.onreadystatechange = function () {
                 if (this.readyState != 4) return;
                 if (this.status == 200) {
-                    console.log(this.responseText);
                     if (this.responseText == 1)
                         alert('Success!');
                     else
@@ -407,7 +398,6 @@ function renewPass() {
 		xhr1.onreadystatechange = function () {
 			if (this.readyState != 4) return;
 			if (this.status == 200) {
-				console.log(this.responseText);
 				if (this.responseText == 1)
 					alert('Success!');
 				else

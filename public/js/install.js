@@ -24,7 +24,6 @@ function installCamagru() {
 				location.replace((location.hash.substr(1) != '') ? location.hash.substr(1) : '/camagru_mvc/admin');
 			else if (this.responseText == '0')
 				location.replace((location.hash.substr(1) != '') ? location.hash.substr(1) : '/camagru_mvc/login');
-			console.log(this.responseText);
 		}
 	};
 	xhr1.send(data);

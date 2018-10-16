@@ -59,7 +59,6 @@ class Db {
                       id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                       uid int(6),
                       type TINYINT(1),
-                      likes INT,
                       descr VARCHAR(30),
                       deleted TINYINT(1) NULL,
                       creation_date TIMESTAMP

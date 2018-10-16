@@ -20,7 +20,8 @@ class MainController extends Controller {
 		$res = json_decode($this->funk->checkAcc($_COOKIE));
 		if ($res->code == 0) {
 			$result = $this->model->get_post();
-			$this->view->render('main page', $result);
+			$result['header'] = true;
+			$this->view->render('Camagru', $result);
 		}
 		else {
 			header('Location: login#');

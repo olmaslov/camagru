@@ -21,6 +21,7 @@ class Main extends Model {
 	    foreach ($result as $key => $value){
 	        $result[$key]['user'] = $this->db->row("SELECT f_name, login FROM users WHERE id = '".$value['uid']."'");
             $result[$key]['comment'] = $this->db->all("SELECT * FROM comments WHERE pid = '".$value['id']."' ORDER BY creation_date DESC");
+            $result[$key]['likecount'] = $this->db->row("SELECT count(*) as total from likes WHERE pid = '".$value['id']."'");
             $result[$key]['like'] = false;
             if ($this->db->row("SELECT * FROM likes WHERE pid = '".$value['id']."' AND uid = '".$_COOKIE['id']."' ORDER BY creation_date DESC")){
                 $result[$key]['like'] = true;

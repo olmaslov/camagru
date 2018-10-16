@@ -45,9 +45,12 @@ class PostController extends Controller {
                             <p>".$val['descr']."</p>
                         </div>
                     </div>
-                    <div class=\"social\">
-                        <i class=\"material-icons like\" id=\"like".$val['id']."\" onclick=\"likePost(".$val['id'].")\">favorite_border</i>
-                    </div>
+                    <div class=\"social\">";
+                if ($val['like'] == true)
+                    echo "<i class=\"material-icons\" id=\"likePost".$val['id']."\" > favorite</i > ";
+                else
+                    echo "<i class=\"material-icons like\" id=\"likePost".$val['id']."\" onclick = \"likePost(".$val['id'].")\" > favorite_border</i > ";
+                echo " <p class='countlike'>".$val['likecount']['total']."</p></div>
                     <div class=\"row\">
                         <div class=\"col-10 textcomm\">
                             <textarea name=\"name\" id='text".$val['id']."'></textarea>
@@ -97,9 +100,12 @@ class PostController extends Controller {
     							<p>".$val['descr']."</p>
     						</div>
     					</div>
-    					<div class=\"social\">
-    						<i class=\"material-icons like\" id=\"like".$val['id']."\" onclick=\"like(".$val['id'].")\">favorite_border</i>
-    					</div>
+    					<div class=\"social\">";
+                if ($val['like'] == true)
+                    echo "<i class=\"material-icons\" id=\"likePost".$val['id']."\" > favorite</i > ";
+                else
+                    echo "<i class=\"material-icons like\" id=\"likePost".$val['id']."\" onclick = \"likePost(".$val['id'].")\" > favorite_border</i > ";
+                echo " <p class='countlike'>".$val['likecount']['total']."</p></div>
     					<div class=\"row\">
     						<div class=\"col-10 textcomm\">
     							<textarea name=\"name\" id='text".$val['id']."'></textarea>

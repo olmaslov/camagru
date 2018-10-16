@@ -12,13 +12,13 @@ namespace application\controllers;
 use application\core\Controller;
 
 class CameraController extends Controller {
-	public function enableAction() {
-		$this->view->render('main page');
-	}
+//	public function enableAction() {
+//		$this->view->render('main page');
+//	}
 
 	public function cameraAction() {
 	    $res = $this->model->get_user_photos($_COOKIE);
-//	    debug($res);
+	    $res['header'] = true;
 	    $this->view->render('camera', $res);
     }
 

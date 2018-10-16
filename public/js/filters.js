@@ -86,11 +86,6 @@ function _1977Filter(ctx, width, height) {
     // ctx.translate(width, 0);
     // ctx.scale(-1, 1);
     ctx.drawImage(vidc, 0, 0, width, height);
-    // if (!vidc.src)
-    // {
-    //     console.log(vidc);
-    // }
-    // ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'screen';
     var gradient = backCol(width, height, "rgba(243, 106, 188, .3)");
     ctx.drawImage(gradient.canvas, 0, 0, width, height);

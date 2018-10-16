@@ -46,7 +46,6 @@ function loadPhotos() {
                                 xhr.onreadystatechange = function () {
                                     if (this.readyState != 4) return;
                                     if (this.status == 200) {
-                                        console.log(this.responseText);
                                         if (this.responseText == '1') {
                                             text.value = '';
                                         }
@@ -73,7 +72,6 @@ function likePost(postid){
         xhr.onreadystatechange = function () {
             if (this.readyState != 4) return;
             if (this.status == 200) {
-                console.log(this.responseText);
                 if (this.responseText == '1') {
                     document.getElementById('likePost' + postid).innerHTML = "favorite";
                 }
@@ -95,7 +93,6 @@ document.querySelectorAll('.sendcomm').forEach(function (comment) {
             xhr.onreadystatechange = function () {
                 if (this.readyState != 4) return;
                 if (this.status == 200) {
-                    console.log(this.responseText);
                     if (this.responseText == '1') {
                         text.value = '';
                     }

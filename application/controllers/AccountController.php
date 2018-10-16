@@ -47,7 +47,7 @@ class AccountController extends Controller {
             else
                 $params['log'] = 1;
         }
-
+        $params['header'] = false;
 		$this->view->render("login", $params);
 
 	}
@@ -77,8 +77,8 @@ class AccountController extends Controller {
 		$res = json_decode($this->funk->checkAcc($_COOKIE));
 		if ($res->code == 0) {
 			$params = $this->model->getUserInfo($_COOKIE);
-//    	    debug($params);
-			$this->view->render("my", $params);
+			$params['header'] = true;
+			$this->view->render("My account", $params);
 		} elseif ($res->code == 2) {
 			View::errorCode(499);
 		} else {
@@ -91,7 +91,7 @@ class AccountController extends Controller {
 		if ($res->code == 0) {
 			if ($res->role == 1) {
 				$params = $this->model->get_users();
-				$this->view->render("admin", $params);
+				$this->view->render("Admin page", $params);
 			} else {
 				View::errorCode(403);
 			}
