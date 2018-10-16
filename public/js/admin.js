@@ -7,6 +7,7 @@ function delUsr(id) {
 		if (this.readyState != 4) return;
 		if (this.status == 200) {
 			if (this.responseText == 1) {
+                location.replace((location.hash.substr(1) != '') ? location.hash.substr(1) : '/camagru_mvc/admin');
 			}
 			else
 				alert('Error deleting user');
@@ -24,6 +25,7 @@ function admUsr(id) {
 		if (this.readyState != 4) return;
 		if (this.status == 200) {
 			if (this.responseText == 1) {
+                location.replace((location.hash.substr(1) != '') ? location.hash.substr(1) : '/camagru_mvc/admin');
 			}
 			else
 				alert('Error changing user role');

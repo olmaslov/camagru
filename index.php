@@ -2,7 +2,7 @@
 
 session_start();
 
-require 'application/lib/Dev.php'; //выводит ошибки
+require 'application/lib/Dev.php';
 require 'application/lib/Functions.php';
 
 spl_autoload_register(function ($class){

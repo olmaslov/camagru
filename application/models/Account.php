@@ -159,7 +159,10 @@ VALUES (:email, :first_name, :last_name, :pass, :login, '2', :hash)", $params);
 	}
 
 	public function loginSimple($args) {
-		$res = $this->db->row("SELECT * from users WHERE login = '" . $args['login'] . "'");
+	    $params = [
+          'login' => $args['login']
+        ];
+		$res = $this->db->row("SELECT * from users WHERE login = :login", $params);
 		$ret = array();
 		if ($res) {
 			if ($res['password'] == hash('md5', $args['pass'])) {

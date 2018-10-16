@@ -311,7 +311,7 @@ function simpleLogin() {
 
 function logOut() {
     var date = new Date(new Date().getTime());
-    document.cookie = "hash=0; path=/; expires=" + date.toUTCString();
+    document.cookie = "hash=NULL; path=/; expires=" + date.toUTCString();
     document.cookie = "id=NULL; path=/; expires=" + date.toUTCString();
     location.replace((location.hash.substr(1) != '') ? location.hash.substr(1) : '/camagru_mvc');
 }
@@ -361,20 +361,42 @@ function changeAccount() {
     }
 }
 
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
 function changePass() {
     var pass = document.querySelector('#pass');
     var cpass = document.querySelector('#passConirm');
+    var hash = getParameterByName('hash');
+    var id = getParameterByName('id');
     if (pass.value != '' && cpass.value != '') {
         if (pass.value == cpass.value) {
             var xhr1 = new XMLHttpRequest();
             var data = "npass=" + pass.value;
+            if (hash != '' && id != ''){
+                data = "npass=" + pass.value +
+                    "&hash=" + hash +
+                    "&id=" + id;
+            }
             xhr1.open("POST", '/camagru_mvc/change', true);
             xhr1.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             xhr1.onreadystatechange = function () {
                 if (this.readyState != 4) return;
                 if (this.status == 200) {
-                    if (this.responseText == 1)
+                    if (this.responseText == 1) {
                         alert('Success!');
+                        if (hash != '') {
+                            location.replace((location.hash.substr(1) != '') ? location.hash.substr(1) : '/camagru_mvc');
+                        }
+                        hash = '';
+                    }
                     else
                         alert('Deny!');
                 }
@@ -398,8 +420,9 @@ function renewPass() {
 		xhr1.onreadystatechange = function () {
 			if (this.readyState != 4) return;
 			if (this.status == 200) {
-				if (this.responseText == 1)
-					alert('Success!');
+				if (this.responseText == 1) {
+                    alert('Success!');
+                }
 				else
 					alert('Deny!');
 			}

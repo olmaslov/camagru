@@ -18,8 +18,8 @@ class InstallController extends Controller {
 
 	public function installAction() {
 		if (!$this->model->test_db() && !isset($_POST['install'])) {
-		    $params['header'] = false;
-            $this->view->render("Camagru install", $params);
+		    $header = false;
+            $this->view->render("Camagru install", NULL, $header);
         }
         if (isset($_POST['install'])) {
             if (!$this->model->install_db($_POST)) {

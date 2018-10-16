@@ -9,11 +9,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
           integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link rel="stylesheet" href="/camagru_mvc/public/css/style.css">
-    <link rel="stylesheet" href="/camagru_mvc/public/css/animate.css">
-    <script src="/camagru_mvc/public/js/account.js"></script>
-    <script src="/camagru_mvc/public/js/filters.js"></script>
-    <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css">
+
+<!--    <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css">-->
     <title>login</title>
 </head>
 <body>
@@ -29,7 +26,7 @@ echo "" . $bing_daily_img_url;
 ?>);"></div>
 <!--header-->
 <?php
-if ($vars['header'] == true){?>
+if ($header == true){?>
 <div class="header">
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
         <a class="navbar-brand" href="./"><img src="./public/img/camagru_logo2alt.png" width="60" alt="logo"></a>
@@ -63,5 +60,9 @@ if ($vars['header'] == true){?>
 <!--end header-->
 <?php }
 echo $content; ?>
+<link rel="stylesheet" href="/camagru_mvc/public/css/style.css">
+<link rel="stylesheet" href="/camagru_mvc/public/css/animate.css">
+<script src="/camagru_mvc/public/js/account.js"></script>
+<script src="/camagru_mvc/public/js/filters.js"></script>
 </body>
 </html>

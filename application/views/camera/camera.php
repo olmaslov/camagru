@@ -11,7 +11,6 @@
     <div id="modal-content">
         <div class="modal-camera">
             <div class="back"></div>
-            <!--				<div class="close"><i class="fas fa-times"></i></div>-->
             <div class="container admin-inner">
                 <div class="row justify-content-center admin-inner">
                     <div class="col-sm-9 left-admin">
@@ -32,10 +31,8 @@
                                     </button>
                                     <button id="upload-photo" class="visible"><i class="material-icons">file_upload</i>
                                     </button>
-                                    <!--                                    <button id="filter-photo" class="hide"><i class="material-icons">filter</i></button>-->
                                     <button id="erase-filter" class="hide disabled visible"><i class="material-icons">filter_none</i>
                                     </button>
-                                    <!--            <a href="#" id="download-photo" download="img.png" title="Save Photo" class="visible"><i class="material-icons">file_download</i></a>-->
                                 </div>
 
                                 <input type="file" style="display: none" id="upload">
@@ -98,14 +95,16 @@
                     <div class="right-admin col-sm-3">
                         <div class="col-sm-12 photos" id="thumbnails">
                             <?php
-                            foreach ($vars as $val) {
-                                echo "<div class=\"row\" >
+                            if (isset($vars[0]['id'])) {
+                                foreach ($vars as $val) {
+                                    echo "<div class=\"row\" >
                                     <div class=\"thumbnail\" id=\"thumb" . $val['id'] . "\" onclick=\"thumbClick(" . $val['id'] . ")\" >
                                         <img src = \"private/photo/" . $val['id'] . ".png\" >
                                         <div class=\"sel\"><i class=\"material-icons\">check_circle</i></div>
                                     </div >
                                     
                                   </div >";
+                                }
                             }
                             ?>
                         </div>
@@ -142,248 +141,3 @@
         }
     })();
 </script>
-<style>
-    /*@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');*/
-    /*@import url('https://fonts.googleapis.com/icon?family=Material+Icons+Rounded');*/
-
-    .photos {
-        height: 93%;
-        overflow: auto;
-    }
-
-    .bottom-btn {
-        padding-right: 15px;
-        padding-left: 15px;
-        position: absolute;
-        width: 100%;
-        bottom: 0;
-    }
-
-    .textcomm {
-        padding: 0;
-    }
-
-    .thumbnail {
-        position: relative;
-    }
-
-    .sel {
-        opacity: 0;
-        position: absolute;
-        color: #2d8ba4;
-        bottom: 0px;
-        right: 5px;
-    }
-
-    .selected .sel {
-        opacity: 1;
-    }
-
-    .filter-gallery {
-        height: 10%;
-        width: 100%;
-        overflow-x: scroll;
-        white-space: nowrap;
-    }
-
-    .filter-gallery img {
-        display: inline-block;
-        vertical-align: top;
-        width: 25%;
-        height: auto;
-    }
-
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
-
-    html {
-        background-color: #fff;
-        font: normal 16px/1.5 sans-serif;
-        color: #333;
-    }
-
-    h3 {
-        font: normal 32px/1.5 'Open Sans', sans-serif;
-        color: #2c3e50;
-        margin: 50px 0;
-        text-align: center;
-    }
-
-    .app {
-        width: 100%;
-        position: relative;
-    }
-
-    .app #start-camera {
-        display: none;
-        border-radius: 3px;
-        max-width: 400px;
-        color: #fff;
-        background-color: #448AFF;
-        text-decoration: none;
-        padding: 15px;
-        opacity: 0.8;
-        margin: 50px auto;
-        text-align: center;
-    }
-
-    .app #camera-stream {
-        display: none;
-        width: 100%;
-    }
-
-    .app img#snap {
-        /*position: absolute;*/
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 10;
-        display: none;
-    }
-
-    .app #error-message {
-        width: 100%;
-        background-color: #ccc;
-        color: #9b9b9b;
-        font-size: 28px;
-        padding: 200px 100px;
-        text-align: center;
-        display: none;
-    }
-
-    .app .controls {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 20;
-
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-        padding: 30px;
-        display: none;
-    }
-
-    .app .controls button {
-        cursor: pointer;
-        border: none;
-        border-radius: 50%;
-        color: #fff;
-        background-color: #111;
-        text-decoration: none;
-        padding: 15px;
-        line-height: 0;
-        opacity: 0.7;
-        outline: none;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    .app .controls button:hover {
-        opacity: 1;
-    }
-
-    .app .controls button.disabled {
-        background-color: #555;
-        opacity: 0.5;
-        cursor: default;
-        pointer-events: none;
-    }
-
-    .app .controls button.disabled:hover {
-        opacity: 0.5;
-    }
-
-    .row .disabled {
-        background-color: #555;
-        opacity: 0.5;
-        cursor: default;
-        pointer-events: none;
-        color: #5F5F5F;
-    }
-
-    #svpic {
-        background: none;
-    }
-
-    .app .controls button i {
-        font-size: 18px;
-    }
-
-    .app .controls #take-photo i {
-        font-size: 32px;
-    }
-
-    .app canvas {
-        display: none;
-    }
-
-    .app #camera-stream.visible,
-    .app img#snap.visible,
-    .app #error-message.visible {
-        display: block;
-    }
-
-    .app .controls.visible {
-        display: flex;
-    }
-
-    @media (max-width: 1000px) {
-
-        .app #start-camera.visible {
-            display: block;
-        }
-
-        .app .controls a i {
-            font-size: 16px;
-        }
-
-        .app .controls #take-photo i {
-            font-size: 24px;
-        }
-    }
-
-    @media (max-width: 600px) {
-        .app #error-message {
-            padding: 80px 50px;
-            font-size: 18px;
-        }
-
-        .app .controls button i {
-            font-size: 12px;
-        }
-
-        .app .controls #take-photo i {
-            font-size: 18px;
-        }
-    }
-
-    #svpic {
-        cursor: pointer;
-    }
-
-    .masks-gallery {
-        height: 10%;
-        white-space: nowrap;
-    }
-
-    .masks-gallery img {
-        max-width: 25%;
-        padding: 15px;
-        max-height: 100%;
-    }
-
-    .disabled {
-        -webkit-user-drag: none;
-        user-select: none;
-    }
-
-    .selected {
-
-    }
-
-</style>

@@ -30,8 +30,8 @@ class Router {
 	}
 
 	public function match() {
-		$url = preg_replace('/\/camagru_mvc\//', '', $_SERVER['REQUEST_URI']); //заменить camagru_mvc на нужное выражение
-		if (($cutoff = strpos($url, '?')) !== false) { //обрезаем get запрос
+		$url = preg_replace('/\/camagru_mvc\//', '', $_SERVER['REQUEST_URI']); //replace camagru_mvc with yours
+		if (($cutoff = strpos($url, '?')) !== false) { //cutting get request
 			$url = substr($url, 0, $cutoff);
 		}
 		foreach ($this->routes as $key => $value){

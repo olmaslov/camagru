@@ -9,7 +9,6 @@
 	<div id="modal-content">
 		<div class="modal-admin">
 			<div class="back"></div>
-			<!--				<div class="close"><i class="fas fa-times"></i></div>-->
 			<div class="container admin-inner">
 				<div class="row justify-content-center admin-inner">
 					<div class="col-sm-12 justify-content-center right-admin">
@@ -59,7 +58,6 @@
 							</div>
 						</div>";
 						}
-//						var_dump($vars[0]['id']);
 						?>
 
 					</div>

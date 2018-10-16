@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     var forms = document.querySelectorAll('.toanim');
-    // para = forms[1].parentNode.parentNode.cloneNode(true);
-    // insertAfter(para, forms[forms.length - 1].parentNode.parentNode);
     var len = 0;
     while (len < forms.length) {
         if (visible(forms[len]))

@@ -21,11 +21,6 @@ return [
         'action' => 'response'
     ],
 
-    'camera' => [
-        'controller' => 'camera',
-        'action' => 'enable'
-    ],
-
     'take_photo' => [
         'controller' => 'camera',
         'action' => 'camera'

@@ -1,7 +1,6 @@
 function changeSize() {
     var mod2 = document.querySelector('.modal-camera');
     var m2 = 'calc(50% - ' + (mod2.clientHeight / 2) + 'px)';
-    // mod2.style.top = m2;
 }
 
 var fade = function () {
@@ -148,7 +147,6 @@ if (navigator.getUserMedia) {
                     vid = videoURL;
                     upload_btn.classList.remove("disabled");
                     delete_btn.classList.remove("disabled");
-                    // record.firstChild.innerText = 'check';
                     record.classList.add("disabled");
                     upload_btn.setAttribute("download", name);
                     upload_btn.setAttribute("name", name);
@@ -164,13 +162,11 @@ if (navigator.getUserMedia) {
                     image.classList.add("visible");
 
 
-                    video.classList.remove("visible");
-                    // record.firstChild.innerText = 'check';
-                    record.classList.add("disabled");
                     // Enable delete and save buttons
+                    video.classList.remove("visible");
+                    record.classList.add("disabled");
                     upload_btn.classList.add("hide");
                     erase_btn.classList.remove("hide");
-                    // erase_btn.classList.add("visible");
                     delete_btn.classList.remove("disabled");
                     filtersg.classList.remove("disabled");
                     masksg.classList.remove("disabled");
@@ -178,7 +174,6 @@ if (navigator.getUserMedia) {
                 ready = 1;
                 record.style.background = "";
                 record.style.color = "";
-                // record.innerHTML = '<i class="material-icons">camera_alt</i>';
                 clearTimeout(timeoutID);
                 timer = 0;
             }

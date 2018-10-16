@@ -19,7 +19,6 @@ class Db {
 		try {
 			$this->dbh = new PDO('mysql:host=' . $conf['host'] . ';dbname=' . $conf['dbname'], $conf['user'], $conf['passwd']);
 		} catch (\PDOException $e) {
-//			$this->initdb();
 			$this->err = 1;
 		}
 	}

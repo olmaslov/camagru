@@ -14,50 +14,59 @@ use application\lib\Db;
 
 class SavetodbController extends Controller {
     public function saveAction() {
-        if ($this->funk->validateUser($_COOKIE)) {
-            if (isset($_POST['type'], $_POST['data'])) {
-                if ($_POST['type'] == 'video') {
-                    $data = substr($_POST['data'], strpos($_POST['data'], ",") + 1);
+        if (isset($_COOKIE['hash'], $_COOKIE['id'])) {
+            $code = json_decode($this->funk->checkAcc($_COOKIE));
+            if ($code->code == 0) {
+                if (isset($_POST['type'], $_POST['data'])) {
+                    if ($_POST['type'] == 'video') {
+                        $data = substr($_POST['data'], strpos($_POST['data'], ",") + 1);
 
-                    $params = [
-                        'uid' => 1,
-                        'descr' => $_POST['descr'],
-                        'type' => 1
-                    ];
-                    $name = $this->model->save_post($params);
-                    $decodedData = base64_decode($data);
-                    file_put_contents('private/video/' . $name . '.mp4', $decodedData);
-                } elseif ($_POST['type'] == 'pic') {
+                        $params = [
+                            'uid' => 1,
+                            'descr' => $_POST['descr'],
+                            'type' => 1
+                        ];
+                        $name = $this->model->save_post($params);
+                        $decodedData = base64_decode($data);
+                        file_put_contents('private/video/' . $name . '.mp4', $decodedData);
+                    } elseif ($_POST['type'] == 'pic') {
 
-                    $data = substr($_POST['data'], strpos($_POST['data'], ",") + 1);
+                        $data = substr($_POST['data'], strpos($_POST['data'], ",") + 1);
 
-                    $params = [
-                        'uid' => $_COOKIE['id'],
-                        'descr' => $_POST['descr'],
-                        'type' => 0
-                    ];
-                    $name = $this->model->save_post($params);
-                    $decodedData = base64_decode($data);
-                    file_put_contents('./private/photo/' . $name . '.png', $decodedData);
+                        $params = [
+                            'uid' => $_COOKIE['id'],
+                            'descr' => $_POST['descr'],
+                            'type' => 0
+                        ];
+                        $name = $this->model->save_post($params);
+                        $decodedData = base64_decode($data);
+                        file_put_contents('./private/photo/' . $name . '.png', $decodedData);
+                    }
+                    print_r($name);
                 }
-                print_r($name);
             }
+            else
+                View::errorCode(403);
         }
         else
             View::errorCode(403);
     }
 
     public function delAction() {
-    	if ($this->funk->validateUser($_COOKIE)) {
-    		if (isset($_POST['delete'], $_POST['id'])){
-    			if ($this->model->del_post($_POST))
-    				echo '1';
-    			else
-    				echo '0';
-			}
-			else
-				View::errorCode(403);
-		}
+        if (isset($_COOKIE['hash'], $_COOKIE['id'])) {
+            $code = json_decode($this->funk->checkAcc($_COOKIE));
+            if ($code->code == 0) {
+                if (isset($_POST['delete'], $_POST['id'])) {
+                    if ($this->model->del_post($_POST))
+                        echo '1';
+                    else
+                        echo '0';
+                } else
+                    View::errorCode(403);
+            }
+            else
+                View::errorCode(403);
+        }
 		else
 			View::errorCode(403);
 	}

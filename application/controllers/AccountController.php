@@ -47,8 +47,8 @@ class AccountController extends Controller {
             else
                 $params['log'] = 1;
         }
-        $params['header'] = false;
-		$this->view->render("login", $params);
+        $header = false;
+		$this->view->render("login", $params, $header);
 
 	}
 
@@ -56,7 +56,7 @@ class AccountController extends Controller {
 		if (isset($_POST['register']) && !isset($_COOKIE['hash'], $_COOKIE['id'])) {
 			exit($this->model->registerSimple($_POST));
 		}
-		elseif (isset($_COOKIE['hash'], $_COOKIE['id'])){
+		elseif (isset($_COOKIE['hash'], $_COOKIE['id']) && !isset($_GET)){
 		    header("Location: ./my");
         }
 
@@ -66,7 +66,8 @@ class AccountController extends Controller {
 			}
 		}
 
-		$this->view->render("register");
+        $header = false;
+		$this->view->render("register", $params, $header);
 	}
 
 	public function responseAction() {
@@ -77,10 +78,10 @@ class AccountController extends Controller {
 		$res = json_decode($this->funk->checkAcc($_COOKIE));
 		if ($res->code == 0) {
 			$params = $this->model->getUserInfo($_COOKIE);
-			$params['header'] = true;
-			$this->view->render("My account", $params);
+			$header = true;
+			$this->view->render("My account", $params, $header);
 		} elseif ($res->code == 2) {
-			View::errorCode(499);
+		    header('Location: resend');
 		} else {
 			header('Location: login#my');
 		}
@@ -91,7 +92,8 @@ class AccountController extends Controller {
 		if ($res->code == 0) {
 			if ($res->role == 1) {
 				$params = $this->model->get_users();
-				$this->view->render("Admin page", $params);
+                $header = true;
+				$this->view->render("Admin page", $params, $header);
 			} else {
 				View::errorCode(403);
 			}
@@ -112,7 +114,8 @@ class AccountController extends Controller {
                     }
                 }
                 else {
-                    $this->view->render("resend email");
+                    $header = false;
+                    $this->view->render("resend email", NULL, $header);
                 }
             }
             else {
@@ -134,11 +137,23 @@ class AccountController extends Controller {
 		} elseif (isset($_COOKIE['hash'], $_COOKIE['id'], $_POST['npass'])) {
 			$args = array_merge($_COOKIE, $_POST);
 			$res = $this->model->editPass($args);
-			if ($res == 1)
-				echo 1;
+			if ($res == 1) {
+                echo 1;
+            }
 			else
 				echo 0;
-		} else {
+		}
+		elseif (isset($_POST['hash'], $_POST['id'], $_POST['npass'])) {
+            $args = array_merge($_GET, $_POST);
+            $res = $this->model->editPass($args);
+            if ($res == 1) {
+                echo 1;
+            }
+            else
+                echo 0;
+        }
+
+		else {
 			View::errorCode(403);
 			echo 0;
 		}
@@ -172,14 +187,21 @@ class AccountController extends Controller {
 			else
 				exit("0");
 		}
-    	$this->view->render('Renew password');
+		$header = false;
+    	$this->view->render('Renew password', NULL, $header);
 	}
 
 	public function newpassAction(){
 		if (isset($_GET['hash'], $_GET['id'])){
-			setcookie("hash", $_GET['hash']);
-			setcookie("id", $_GET['id']);
-			$this->view->render("Set new password");
+            $code = json_decode($this->funk->checkAcc($_GET));
+            if ($code->code == 0) {
+//                setcookie("hash", $_GET['hash']);
+//                setcookie("id", $_GET['id']);
+                $header = false;
+                $this->view->render("Set new password", NULL, $header);
+            }
+            else
+                header("Location: login");
 		}
 		else
 			View::errorCode(403);

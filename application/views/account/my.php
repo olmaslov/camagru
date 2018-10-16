@@ -1,10 +1,3 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: omaslov
- * Date: 03.10.18
- * Time: 20:43
- */ ?>
 <div class="test_abs">
 	<div id="modal-content">
 		<div class="modal-my login">

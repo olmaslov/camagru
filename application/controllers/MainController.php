@@ -14,22 +14,15 @@ use application\lib\Db;
 class MainController extends Controller {
 
 	public function indexAction() {
-//		require 'AccountController.php';
-//		$acc = AccountController::class;
-//		print_r($this->funk->checkAcc($_COOKIE));
 		$res = json_decode($this->funk->checkAcc($_COOKIE));
 		if ($res->code == 0) {
 			$result = $this->model->get_post();
-			$result['header'] = true;
-			$this->view->render('Camagru', $result);
+			$header = true;
+			$this->view->render('Camagru', $result, $header);
 		}
 		else {
 			header('Location: login#');
 		}
 
 	}
-
-	public function getpostAction() {
-//	    $this->model->get_post($_POST['last']);
-    }
 }
