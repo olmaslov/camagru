@@ -14,13 +14,26 @@ p {
   /*transform: scaleX(-1);*/
 /*}*/
 
+.nav-link {
+  color: #111111!important;
+  cursor: pointer;
+}
+
+.nav-link i{
+  font-size: 25pt;
+}
+
+.nav-link:hover {
+  color: #5f5f5f!important;
+}
+
 .test_abs {
   box-sizing: border-box;
   /* background: blue; */
   height: 100%;
   left: 0;
   overflow: hidden;
-  position: absolute;
+  /*position: absolute;*/
   text-align: center;
   top: 0;
   width: 100%;
@@ -32,8 +45,17 @@ p {
   right: 15px;
 }
 
+.header {
+  max-width: 60rem;
+  margin-left: calc(50% - 30rem);
+}
+
+.header nav {
+  background: rgba(255, 255, 255, 0.4)!important;
+  border-radius: 10px;
+}
+
 .background {
-  /* background-image: url("https://www.bing.com/az/hprichbg/rb/Pygmy3Toed_EN-US11340370698_1920x1080.jpg"); */
   background-size: cover;
   filter: blur(10px);
   height: 110%;
@@ -76,6 +98,7 @@ p {
   left: calc(50% - 30rem);
   max-width: 60rem;
   top: 5%;
+  margin-top: 36px;
   padding: 50px;
   height: 90%;
   width: 100%;
@@ -87,6 +110,7 @@ p {
   left: calc(50% - 30rem);
   max-width: 60rem;
   top: 5%;
+  margin-top: 36px;
   padding: 50px;
   height: 90%;
   width: 100%;

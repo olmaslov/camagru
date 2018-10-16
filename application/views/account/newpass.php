@@ -6,14 +6,6 @@
  * Time: 20:43
  */ ?>
 <div class="test_abs">
-	<div class="background" style="background-image: url(
-	<?php
-	$random = rand(0, 7);
-	$bing_daily_image_xml = file_get_contents("http://bing.com/HPImageArchive.aspx?idx=" . $random . "&n=1");
-	preg_match("/<urlBase>(.+?)<\/urlBase>/is", $bing_daily_image_xml, $matches);
-	$bing_daily_img_url = "https://s.cn.bing.com" . $matches[1] . "_1920x1080.jpg";
-	echo "" . $bing_daily_img_url;
-	?>);"></div>
 	<div id="modal-content">
 		<div class="modal-my login">
 			<div class="back"></div>

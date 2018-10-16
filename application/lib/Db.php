@@ -59,6 +59,7 @@ class Db {
                       id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                       uid int(6),
                       type TINYINT(1),
+                      likes INT,
                       descr VARCHAR(30),
                       deleted TINYINT(1) NULL,
                       creation_date TIMESTAMP
@@ -68,6 +69,12 @@ class Db {
                       uid int(6),
                       pid int(6),
                       text VARCHAR(600),
+                      creation_date TIMESTAMP
+                      );
+                      CREATE TABLE likes (
+                      id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                      uid int(6),
+                      pid int(6),
                       creation_date TIMESTAMP
                       )";
 			$this->dbh->exec($sql);

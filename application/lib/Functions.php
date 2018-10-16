@@ -44,7 +44,7 @@ class Functions {
 			} else {
 				$ret['hash'] = $this->generateCode();
 				$ret['code'] = 1;
-				$this->db->query("UPDATE `users` SET `hash`= '" . $ret['hash'] . "' WHERE `id`= '" . $ret['id'] . "';");
+				$this->db->query("UPDATE `users` SET `hash`= '" . $ret['hash'] . "' WHERE `id`= '" . $args['id'] . "';");
 				return json_encode($ret);
 			}
 		} else {

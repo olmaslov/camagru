@@ -31,7 +31,6 @@ function closemodal() {
 function closemodal2() {
     var el = document.getElementById('modal-content2');
     fadeOut(el);
-    // Stop stream
     try {
         let stream = video.srcObject;
         let tracks = stream.getTracks();
@@ -67,7 +66,6 @@ function fbLoginAJAX() {
                     if (this.readyState != 4) return;
                     if (this.status == 200) {
                         console.log(this.responseText);
-                        // closemodal();
                         var json = JSON.parse(this.responseText);
                         var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
                         document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
@@ -111,7 +109,6 @@ function glLoginAJAX() {
                     if (this.readyState != 4) return;
                     if (this.status == 200) {
                         var json = JSON.parse(this.responseText);
-                        // closemodal();
                         var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
                         document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
                         document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
@@ -178,7 +175,6 @@ function intraLoginAJAX() {
                                     if (this.readyState != 4) return;
                                     if (this.status == 200) {
                                         var json = JSON.parse(this.responseText);
-                                        // closemodal();
                                         var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
                                         document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
                                         document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
@@ -226,7 +222,6 @@ function registerSimple() {
     var fname = document.querySelector('#fnameReg');
     var lname = document.querySelector('#lnameReg');
     if (login.value != '' && email.value != '' && pass.value != '' && conf.value != '' && fname != '' && lname != '') {
-        // console.log(login.value, email.value, pass.value, conf.value);
         if (pass.value == conf.value) {
             if (validateEmail(email.value)) {
                 if (validateLogin(login.value)) {
@@ -242,13 +237,13 @@ function registerSimple() {
                         xhr1.onreadystatechange = function () {
                             if (this.readyState != 4) return;
                             if (this.status == 200) {
-                                console.log(this.responseText);
                                 var json = JSON.parse(this.responseText);
-                                var date = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
-                                document.cookie = "hash=" + json.hash + "; path=/; expires=" + date.toUTCString();
-                                document.cookie = "id=" + json.id + "; path=/; expires=" + date.toUTCString();
-                                // closemodal();
-                                location.replace((location.hash.substr(1) != '') ? location.hash.substr(1) : '/camagru_mvc');
+                                if (json.error == 1)
+                                    alert("Login already exist");
+                                else if (json.error == 2)
+                                    alert("User with such email already exists");
+                                else
+                                    location.replace((location.hash.substr(1) != '') ? location.hash.substr(1) : '/camagru_mvc/login');
                             }
                         };
                         xhr1.send(data);
@@ -281,8 +276,6 @@ function simpleLogin() {
     var pass = document.querySelector('#logPass');
     var remember = document.querySelector('#customControlAutosizing');
     if (login.value != '' && pass.value != '') {
-        // console.log(login.value);
-        // console.log(pass.value);
         var xhr1 = new XMLHttpRequest();
         var data = "simple=true&login=" + login.value +
             "&pass=" + pass.value;

@@ -150,7 +150,10 @@ VALUES (:email, :first_name, :last_name, :pass, :login, '2', :hash)", $params);
 			$jsonret['id'] = $query['id'];
 			return (json_encode($jsonret));
 		} else {
-			$jsonret['error'] = 'user already exists';
+		    if ($res2)
+		        $jsonret['error'] = 1;
+		    else
+			    $jsonret['error'] = 2;
 			return (json_encode($jsonret));
 		}
 	}

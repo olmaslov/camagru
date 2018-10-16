@@ -40,17 +40,25 @@ class AccountController extends Controller {
 		}
 
 		$params['log'] = 0;
-		if (isset($_COOKIE['hash']))
-			$params['log'] = 1;
+		if (isset($_COOKIE['hash'], $_COOKIE['id'])){
+            $code = json_decode($this->funk->checkAcc($_COOKIE));
+            if ($code->code == 2)
+                header("Location: resend");
+            else
+                $params['log'] = 1;
+        }
 
 		$this->view->render("login", $params);
 
 	}
 
 	public function registerAction() {
-		if (isset($_POST['register'])) {
+		if (isset($_POST['register']) && !isset($_COOKIE['hash'], $_COOKIE['id'])) {
 			exit($this->model->registerSimple($_POST));
 		}
+		elseif (isset($_COOKIE['hash'], $_COOKIE['id'])){
+		    header("Location: ./my");
+        }
 
 		if (isset($_GET['hash'])) {
 			if ($this->model->verifyEmail($_GET) == 1) {

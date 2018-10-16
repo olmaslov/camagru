@@ -39,4 +39,21 @@ class Post extends Model {
         }
         return 0;
     }
+
+    public function add_like() {
+        $params = [
+            'id' => $_POST['id'],
+            'uid' => $_COOKIE['id']
+        ];
+        if (!$this->db->row("SELECT * from likes WHERE pid = '" . $_POST['id'] . "' AND uid = '".$_COOKIE['id']."'"))
+        if ($this->db->query('INSERT INTO `likes`(`uid`, `pid`) VALUES (:uid, :id)', $params)){
+            $res = $this->db->row("SELECT * from posts WHERE id = '" . $_POST['id'] . "'");
+            $res1 = $this->db->row("SELECT * from users WHERE id = '" . $res['uid'] . "'");
+            if ($res1['receive'] == 1) {
+                mail($res1['email'], 'Comment', "You have new like on your post");
+            }
+            return 1;
+        }
+        return 0;
+    }
 }

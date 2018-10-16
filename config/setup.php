@@ -13,8 +13,10 @@ if ($args['std'] == 0){
 		\'passwd\' => $DB_PASSWORD
 	];';
 			file_put_contents('./config/database.php', $db_info);
-    if(mkdir('./private'))
-        mkdir('./private/photo');
+			if (!file_exists('./private/photo')) {
+                if (mkdir('./private'))
+                    mkdir('./private/photo');
+            }
     $this->db->initdb();
     $hash = $this->funk->generateCode();
     $params = [

@@ -99,5 +99,10 @@ return [
     'addcom' => [
         'controller' => 'post',
         'action' => 'comment'
+    ],
+
+    'addlike' => [
+        'controller' => 'post',
+        'action' => 'like'
     ]
 ];

@@ -34,6 +34,48 @@ function loadPhotos() {
                     document.querySelector('.container').appendChild(bar);
                     clearTimeout(t1);
                     ajaxflag = true;
+                    document.querySelectorAll('.sendcomm').forEach(function (comment) {
+                        comment.addEventListener('click', function () {
+                            var text = document.getElementById(comment.id.replace('send', 'text'));
+                            if (text.value != '') {
+                                var fd = new FormData();
+                                fd.append('comment', text.value);
+                                fd.append('id', comment.id.replace('send', ''));
+                                var xhr = new XMLHttpRequest();
+                                xhr.open("POST", '/camagru_mvc/addcom', true);
+                                xhr.onreadystatechange = function () {
+                                    if (this.readyState != 4) return;
+                                    if (this.status == 200) {
+                                        console.log(this.responseText);
+                                        if (this.responseText == '1') {
+                                            text.value = '';
+                                        }
+                                    }
+                                };
+                                xhr.send(fd);
+                            }
+                        });
+                    });
+                }
+            }
+        };
+        xhr.send(fd);
+    }
+}
+
+function likePost(postid){
+    if (postid != ''){
+        var fd = new FormData();
+        fd.append('id', postid);
+        fd.append('like', true);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", '/camagru_mvc/addlike', true);
+        xhr.onreadystatechange = function () {
+            if (this.readyState != 4) return;
+            if (this.status == 200) {
+                console.log(this.responseText);
+                if (this.responseText == '1') {
+                    document.getElementById('likePost' + postid).innerHTML = "favorite";
                 }
             }
         };
@@ -63,3 +105,4 @@ document.querySelectorAll('.sendcomm').forEach(function (comment) {
         }
     });
 });
+

@@ -46,7 +46,7 @@ class PostController extends Controller {
                         </div>
                     </div>
                     <div class=\"social\">
-                        <i class=\"material-icons like\" id=\"like".$val['id']."\" onclick=\"like(".$val['id'].")\">favorite_border</i>
+                        <i class=\"material-icons like\" id=\"like".$val['id']."\" onclick=\"likePost(".$val['id'].")\">favorite_border</i>
                     </div>
                     <div class=\"row\">
                         <div class=\"col-10 textcomm\">
@@ -149,12 +149,34 @@ class PostController extends Controller {
     }
 
     public function commentAction () {
-        if (isset($_POST['comment'], $_POST['id']) && $this->funk->checkAcc($_COOKIE)){
-            if ($this->model->add_comment()){
-                echo 1;
+        if (isset($_POST['comment'], $_POST['id'])){
+            $code = json_decode($this->funk->checkAcc($_COOKIE));
+            if ($code->code == 0) {
+                if ($this->model->add_comment()) {
+                    echo 1;
+                } else
+                    echo 0;
             }
             else
                 echo 0;
         }
+        else
+            View::errorCode(403);
+    }
+
+    public function likeAction (){
+        if (isset($_POST['like'], $_POST['id'])){
+            $code = json_decode($this->funk->checkAcc($_COOKIE));
+            if ($code->code == 0) {
+                if ($this->model->add_like()) {
+                    echo 1;
+                } else
+                    echo 0;
+            }
+            else
+                echo 0;
+        }
+        else
+            View::errorCode(403);
     }
 }
