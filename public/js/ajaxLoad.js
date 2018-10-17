@@ -11,9 +11,6 @@ function loadPhotos() {
     var lineend = document.getElementById('end');
     var bar = lineend.parentNode.parentNode.cloneNode(true);
     var lastid = getlastId();
-    var t1 = setTimeout(function () {
-        lineend.classList.remove('end')
-    }, 1000);
     if (lastid.replace('post', '') > 0) {
         var fd = new FormData();
         fd.append('lastid', lastid.replace('post', ''));
@@ -32,7 +29,6 @@ function loadPhotos() {
                     var doc = document.getElementById(lastid).parentNode.parentNode.parentNode;
                     doc.innerHTML = doc.innerHTML + this.responseText;
                     document.querySelector('.container').appendChild(bar);
-                    clearTimeout(t1);
                     ajaxflag = true;
                     document.querySelectorAll('.sendcomm').forEach(function (comment) {
                         comment.addEventListener('click', function () {

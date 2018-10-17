@@ -3,6 +3,9 @@
 
 body {
   font-family: 'Open Sans', sans-serif;
+  position: relative;
+  min-width: 98vw;
+  min-height: 100vh;
 }
 
 p {
@@ -341,6 +344,7 @@ textarea {
   margin-left: calc(50% - 9px);
   position: relative;
   top: -3px;
+  margin-bottom: 16px;
 }
 
 .last-el {
