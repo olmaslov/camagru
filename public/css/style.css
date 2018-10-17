@@ -507,6 +507,12 @@ textarea {
   text-align: center;
 }
 
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
 .cssload-loading {
   top: -15px;
   position: relative;

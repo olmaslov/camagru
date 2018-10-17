@@ -60,7 +60,7 @@ if ($header == true){?>
 echo $content; ?>
 
 <!--footer-->
-<footer class="page-footer font-small blue col-lg-1">
+<footer class="footer col-sm-12">
 
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">© 2018 Copyright:
