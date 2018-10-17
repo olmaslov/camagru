@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
           integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-
-<!--    <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css">-->
     <title>login</title>
 </head>
 <body>
@@ -60,6 +58,19 @@ if ($header == true){?>
 <!--end header-->
 <?php }
 echo $content; ?>
+
+<!--footer-->
+<footer class="page-footer font-small blue col-lg-1">
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2018 Copyright:
+        <a href="https://localhost:8443/camagru_mvc/"> Camagru</a>
+    </div>
+    <!-- Copyright -->
+
+</footer>
+<!--end footer-->
+
 <link rel="stylesheet" href="/camagru_mvc/public/css/style.css">
 <link rel="stylesheet" href="/camagru_mvc/public/css/animate.css">
 <script src="/camagru_mvc/public/js/account.js"></script>

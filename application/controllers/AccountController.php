@@ -195,8 +195,6 @@ class AccountController extends Controller {
 		if (isset($_GET['hash'], $_GET['id'])){
             $code = json_decode($this->funk->checkAcc($_GET));
             if ($code->code == 0) {
-//                setcookie("hash", $_GET['hash']);
-//                setcookie("id", $_GET['id']);
                 $header = false;
                 $this->view->render("Set new password", NULL, $header);
             }
